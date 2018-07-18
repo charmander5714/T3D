@@ -1,0 +1,11 @@
+digraph "thirdparty/old/glm/test/gtx" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_33902454365992b87c3c8b4416673048 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="test" fontname="Helvetica", fontsize="10", URL="dir_33902454365992b87c3c8b4416673048.html"]
+  dir_51bcfb5a6c9d1ba5b062232429848b2c [shape=box, label="gtx", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_51bcfb5a6c9d1ba5b062232429848b2c.html"];
+  }
+  dir_79ddca3cff5b21418b91ce2b9eb63862 [shape=box label="glm" fillcolor="white" style="filled" color="red" URL="dir_79ddca3cff5b21418b91ce2b9eb63862.html"];
+  dir_51bcfb5a6c9d1ba5b062232429848b2c->dir_79ddca3cff5b21418b91ce2b9eb63862 [headlabel="5", labeldistance=1.5 headhref="dir_000036_000013.html"];
+}

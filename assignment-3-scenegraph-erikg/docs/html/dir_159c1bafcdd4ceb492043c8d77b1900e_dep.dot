@@ -1,0 +1,9 @@
+digraph "thirdparty/old/glm/glm/detail" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_79ddca3cff5b21418b91ce2b9eb63862 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="glm" fontname="Helvetica", fontsize="10", URL="dir_79ddca3cff5b21418b91ce2b9eb63862.html"]
+  dir_159c1bafcdd4ceb492043c8d77b1900e [shape=box, label="detail", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_159c1bafcdd4ceb492043c8d77b1900e.html"];
+  }
+}

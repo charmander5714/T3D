@@ -1,0 +1,9 @@
+digraph "thirdparty/old/glm/test/external/gli/gtx" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_b908d50e33f3003b9af454e0a48733dd {
+    graph [ bgcolor="#ddddee", pencolor="black", label="gli" fontname="Helvetica", fontsize="10", URL="dir_b908d50e33f3003b9af454e0a48733dd.html"]
+  dir_ae54e8d82c4fc41b4be95642809327d3 [shape=box, label="gtx", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_ae54e8d82c4fc41b4be95642809327d3.html"];
+  }
+}
