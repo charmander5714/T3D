@@ -1,0 +1,33 @@
+digraph "thirdparty/glm/glm/gtc/vec1.hpp"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="thirdparty/glm/glm\l/gtc/vec1.hpp",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="thirdparty/glm/glm\l/gtc/type_precision.hpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$glm_2glm_2gtc_2type__precision_8hpp.html"];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="thirdparty/glm/glm\l/gtc/packing.hpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$glm_2glm_2gtc_2packing_8hpp.html"];
+  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="thirdparty/glm/glm\l/ext.hpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$glm_2glm_2ext_8hpp.html"];
+  Node2 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="thirdparty/glm/glm\l/gtx/number_precision.hpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$glm_2glm_2gtx_2number__precision_8hpp.html"];
+  Node5 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="thirdparty/glm/glm\l/gtx/string_cast.hpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$glm_2glm_2gtx_2string__cast_8hpp.html"];
+  Node6 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="thirdparty/glm/glm\l/gtx/type_aligned.hpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$glm_2glm_2gtx_2type__aligned_8hpp.html"];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="thirdparty/glm/glm\l/gtx/wrap.hpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$glm_2glm_2gtx_2wrap_8hpp.html"];
+  Node8 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="thirdparty/glm/glm\l/gtc/type_aligned.hpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$glm_2glm_2gtc_2type__aligned_8hpp.html",tooltip="GLM_GTC_type_aligned "];
+  Node1 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="thirdparty/glm/glm\l/gtx/common.hpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$glm_2glm_2gtx_2common_8hpp.html"];
+  Node1 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="thirdparty/glm/glm\l/gtx/hash.hpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$hash_8hpp.html",tooltip="GLM_GTX_hash "];
+  Node1 -> Node12 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="thirdparty/glm/glm\l/gtx/range.hpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$glm_2glm_2gtx_2range_8hpp.html"];
+}

@@ -1,0 +1,15 @@
+digraph "thirdparty/old/glm/test/external/gli" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_b5f8f2e4c2abfcf40c2bc5206545df22 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="external" fontname="Helvetica", fontsize="10", URL="dir_b5f8f2e4c2abfcf40c2bc5206545df22.html"]
+  subgraph clusterdir_b908d50e33f3003b9af454e0a48733dd {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_b908d50e33f3003b9af454e0a48733dd.html"];
+    dir_b908d50e33f3003b9af454e0a48733dd [shape=plaintext label="gli"];
+    dir_4ae181e5e1a45a6c85c1e7ae7219c8a7 [shape=box label="core" color="black" fillcolor="white" style="filled" URL="dir_4ae181e5e1a45a6c85c1e7ae7219c8a7.html"];
+    dir_ae54e8d82c4fc41b4be95642809327d3 [shape=box label="gtx" color="black" fillcolor="white" style="filled" URL="dir_ae54e8d82c4fc41b4be95642809327d3.html"];
+  }
+  }
+  dir_b908d50e33f3003b9af454e0a48733dd->dir_4ae181e5e1a45a6c85c1e7ae7219c8a7 [headlabel="7", labeldistance=1.5 headhref="dir_000023_000024.html"];
+}

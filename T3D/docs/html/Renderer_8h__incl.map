@@ -1,0 +1,13 @@
+<map id="include/Renderer.h" name="include/Renderer.h">
+<area shape="rect" id="node2" href="$glad_8h.html" title="glad/glad.h" alt="" coords="559,304,651,331"/>
+<area shape="rect" id="node8" href="$SceneNode_8h.html" title="SceneNode helps organize a large 3D graphics scene. " alt="" coords="712,80,820,107"/>
+<area shape="rect" id="node18" href="$Camera_8h.html" title="Sets up an OpenGL camera. " alt="" coords="993,155,1078,181"/>
+<area shape="rect" id="node4" href="$khrplatform_8h.html" title="KHR/khrplatform.h" alt="" coords="666,379,805,405"/>
+<area shape="rect" id="node9" href="$Object_8h.html" title="Sets up an OpenGL camera. " alt="" coords="335,155,410,181"/>
+<area shape="rect" id="node17" href="$Transform_8h.html" title="Responsible for holding matrix operations in model, view, and projection space. " alt="" coords="673,155,771,181"/>
+<area shape="rect" id="node20" href="$Shader_8h.html" title="Manages the loading, compiling, and linking of vertex and fragment shaders. " alt="" coords="943,229,1021,256"/>
+<area shape="rect" id="node10" href="$Buffer_8h.html" title="Sets up a variety of Vertex Buffer Object (VBO) layouts. " alt="" coords="375,229,445,256"/>
+<area shape="rect" id="node11" href="$Texture_8h.html" title="Loads an image and creates an OpenGL texture on the GPU. " alt="" coords="219,229,299,256"/>
+<area shape="rect" id="node14" href="$Geometry_8h.html" title="Organizes vertex and triangle information. " alt="" coords="99,229,195,256"/>
+<area shape="rect" id="node12" href="$Image_8h.html" title="Sets up an OpenGL camera. " alt="" coords="297,304,371,331"/>
+</map>

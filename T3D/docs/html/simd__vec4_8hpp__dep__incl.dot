@@ -1,0 +1,10 @@
+digraph "thirdparty/old/glm/glm/gtx/simd_vec4.hpp"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="thirdparty/old/glm\l/glm/gtx/simd_vec4.hpp",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="thirdparty/old/glm\l/test/gtx/gtx_simd_mat4.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$gtx__simd__mat4_8cpp.html",tooltip="OpenGL Mathematics (glm.g-truc.net) "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="thirdparty/old/glm\l/test/gtx/gtx_simd_vec4.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$gtx__simd__vec4_8cpp.html",tooltip="OpenGL Mathematics (glm.g-truc.net) "];
+}

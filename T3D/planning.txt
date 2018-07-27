@@ -1,0 +1,13 @@
+3d 
+
+  rotate cube
+    move master node -> redraw
+    up direction?
+
+
+2d
+
+  glOrtho()
+    maps windows -> pixel
+    get pixel positions on click event
+    switch to buttons
