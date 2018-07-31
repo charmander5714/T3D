@@ -1,3 +1,5 @@
+//obsoleted by MarkerType.h
+
 #ifndef MARKER_H
 #define MARKER_H
 

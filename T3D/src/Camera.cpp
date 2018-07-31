@@ -27,15 +27,17 @@ void Camera::mouseLook(int mouseX, int mouseY){
 }
 
 void Camera::rotateWorld(int mouseX, int mouseY) {
-	glm::vec2 newMousePosition(mouseX, mouseY);
-	glm::vec2 mouseDelta = 0.01f*(newMousePosition-oldMousePosition);
-	viewDirection = glm::mat3(glm::rotate(-mouseDelta.x, upVector)) * viewDirection;
-	float eyePositionX = -mouseDelta.x * cos(rotateWorldRadius);
-	float eyePositionY = -mouseDelta.x * sin(rotateWorldRadius);
-	eyePosition = glm::vec3(eyePositionX, 0.0f, eyePositionY);
+								glm::vec2 newMousePosition(mouseX, mouseY);
+								glm::vec2 mouseDelta = 0.01f*(newMousePosition-oldMousePosition);
+								viewDirection = glm::mat3(glm::rotate(-mouseDelta.x, upVector)) * viewDirection;
+								// float eyePositionX = -mouseDelta.x * cos(rotateWorldRadius);
+								// float eyePositionY = -mouseDelta.x * sin(rotateWorldRadius);
+								float eyePositionX = eyePositionX + 1;
+								float eyePositionY = eyePositionY + 1;
+								eyePosition = glm::vec3(eyePositionX, getEyeYPosition(), eyePositionY);
 
 
-oldMousePosition = newMousePosition;
+								oldMousePosition = newMousePosition;
 }
 
 void Camera::moveForward(float speed){

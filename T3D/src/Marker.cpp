@@ -1,3 +1,5 @@
+//obsoleted by MarkerType.h
+
 #include "Marker.h"
 
 Marker::Marker() {
