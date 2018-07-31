@@ -2,7 +2,7 @@
 
 // Sets the height and width of our renderer
 Renderer::Renderer(unsigned int w, unsigned int h){
-        std::cout << "(Renderer.cpp) Constructor called)\n";
+      //  std::cout << "(Renderer.cpp) Constructor called)\n";
         screenWidth = w;
         screenHeight = h;
 

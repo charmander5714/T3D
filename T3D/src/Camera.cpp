@@ -7,7 +7,7 @@
 // Camera constructor
 Camera::Camera(){
 								std::cout << "(Camera.cpp) Constructor called\n";
-								eyePosition = glm::vec3(0.0f,0.0f, 5.0f); // FIX: Typically this should be 0,0,0, but I moved for our assignment.
+								eyePosition = glm::vec3(0.0f,0.0f, 15.0f); // FIX: Typically this should be 0,0,0, but I moved for our assignment.
 								viewDirection = glm::vec3(0.0f,0.0f, -1.0f);
 								upVector = glm::vec3(0.0f, 1.0f, 0.0f);
 

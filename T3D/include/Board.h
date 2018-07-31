@@ -10,12 +10,13 @@ public:
 Board();
 ~Board();
 
+
 Layer getLayer(int layerID);
 
 
 private:
 
-vector<Layer> layers;
+vector<Layer> boardLayers;
 
 };
 

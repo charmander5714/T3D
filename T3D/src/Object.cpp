@@ -5,15 +5,15 @@
 
 
 Object::Object(){
-    std::cout << "(Object.cpp) Constructor called\n";    
+    //std::cout << "(Object.cpp) Constructor called\n";    
 //    init(); // TODO: Think about how to remove this
 }
 
 Object::~Object(){
-    
+
 }
 
-// TODO: In the future it may be good to 
+// TODO: In the future it may be good to
 // think about loading a 'default' texture
 // if the user forgets to do this action!
 void Object::LoadTexture(std::string fileName){
@@ -29,7 +29,7 @@ void Object::LoadTexture(std::string fileName){
 void Object::init(){
         // Setup geometry
         // Be careful not to forget comma's after each line
-        // (except the last line of course)!	
+        // (except the last line of course)!
         geometry.addVertex(-1.0f,-1.0f,0.0f);   // Position
         geometry.addTexture(0.0f,0.0f);         // Texture
 
@@ -42,7 +42,7 @@ void Object::init(){
         geometry.addVertex(-1.0f,1.0f,0.0f);   // Position
         geometry.addTexture(0.0f, 1.0f);        // Texture
         // Make our triangles and populate our
-        // indices data structure	
+        // indices data structure
         geometry.makeTriangle(0,1,2);
         geometry.makeTriangle(2,3,0);
 
@@ -73,6 +73,5 @@ void Object::render(){
     glDrawElements(GL_TRIANGLES,
                     geometry.getIndicesSize(),               // The number of indicies, not triangles.
                     GL_UNSIGNED_INT, // Make sure the data type matches
-                    nullptr);       // Offset pointer to the data. nullptr because we are currently bound:	
+                    nullptr);       // Offset pointer to the data. nullptr because we are currently bound:
 }
-

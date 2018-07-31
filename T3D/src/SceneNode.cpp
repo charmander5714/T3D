@@ -111,3 +111,7 @@ Transform& SceneNode::getLocalTransform(){
 Transform& SceneNode::getWorldTransform(){
 								return worldTransform;
 }
+
+Object* SceneNode::getObject() {
+	return object;
+}

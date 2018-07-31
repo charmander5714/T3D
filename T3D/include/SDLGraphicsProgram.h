@@ -62,7 +62,13 @@ Renderer* renderer;
 
 Game game;
 
-vector<SceneNode> markerNodes;
+vector<SceneNode*> markerNodes;
+
+void add3R(int rowRoot);
+
+void fillLayer(int layerRoot);
+
+void fillBoard(int root);
 };
 
 #endif

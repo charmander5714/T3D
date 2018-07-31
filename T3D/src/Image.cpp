@@ -6,13 +6,13 @@
 #include <memory>
 
 Image::Image(std::string filepath) : m_filepath(filepath){
-	std::cout << "(Image.h) Constructor called\n";    
+	//std::cout << "(Image.h) Constructor called\n";
 }
 
 
 // Destructor
 Image::~Image (){
-    // Delete our pixel data.	
+    // Delete our pixel data.
     // Note: We could actually do this sooner
     // in our rendering process.
     if(m_PixelData!=NULL){
@@ -36,19 +36,19 @@ void Image::loadPPM(bool flip){
       std::string line;
       // Our loop invariant is to continue reading input until
       // we reach the end of the file and it reads in a NULL character
-      std::cout << "Reading in ppm file: " << m_filepath << std::endl;
+      //std::cout << "Reading in ppm file: " << m_filepath << std::endl;
       unsigned int iteration = 0;
       unsigned int pos = 0;
       while ( getline (ppmFile,line) ){
          if(line[0]=='P'){
             magicNumber = line;
          }else if(iteration==1){
-            // Returns first token 
-            char *token = strtok((char*)line.c_str(), " "); 
+            // Returns first token
+            char *token = strtok((char*)line.c_str(), " ");
             m_width = atoi(token);
             token = strtok(NULL, " ");
             m_height = atoi(token);
-            std::cout << "PPM width,height=" << m_width << "," << m_height << "\n";	
+          //  std::cout << "PPM width,height=" << m_width << "," << m_height << "\n";
             if(m_width > 0 && m_height > 0){
                 m_PixelData = new unsigned char[m_width*m_height*3];
                 if(m_PixelData==NULL){
@@ -67,12 +67,12 @@ void Image::loadPPM(bool flip){
             ++pos;
          }
           iteration++;
-    }             
+    }
     ppmFile.close();
   }
   else{
       std::cout << "Unable to open ppm file:" << m_filepath << std::endl;
-  } 
+  }
 
     // Flip all of the pixels
     if(flip){
@@ -97,15 +97,15 @@ void Image::loadPPM(bool flip){
 
 /*  ===============================================
 Desc: Sets a pixel in our array a specific color
-Precondition: 
+Precondition:
 Post-condition:
-=============================================== */ 
+=============================================== */
 void Image::setPixel(int x, int y, int r, int g, int b){
   if(x > m_width || y > m_height){
     return;
   }
   else{
-    /*std::cout << "modifying pixel at " 
+    /*std::cout << "modifying pixel at "
               << x << "," << y << "from (" <<
               (int)color[x*y] << "," << (int)color[x*y+1] << "," <<
 (int)color[x*y+2] << ")";*/
@@ -121,10 +121,10 @@ void Image::setPixel(int x, int y, int r, int g, int b){
 }
 
 /*  ===============================================
-Desc: 
-Precondition: 
+Desc:
+Precondition:
 Post-condition:
-=============================================== */ 
+=============================================== */
 void Image::printPixels(){
     for(int x = 0; x <  m_width*m_height*3; ++x){
         std::cout << " " << (int)m_PixelData[x];
@@ -134,9 +134,9 @@ void Image::printPixels(){
 
 /*  ===============================================
 Desc: Returns pixel data for our image
-Precondition: 
+Precondition:
 Post-condition:
-=============================================== */ 
+=============================================== */
 unsigned char* Image::getPixelData(){
     return m_PixelData;
 }

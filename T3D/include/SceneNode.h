@@ -2,7 +2,7 @@
 #define SCENENODE_H
 /** @file SceneNode.h
  *  @brief SceneNode helps organize a large 3D graphics scene.
- *  
+ *
  *  SceneNode helps organize a large 3D graphics scene.
  *  The traversal of the tree takes place starting from
  *  a single SceneNode (typically called root).
@@ -44,6 +44,8 @@ public:
     Transform& getWorldTransform();
     // For now we have one shader per object.
     Shader myShader;
+
+    Object* getObject();
 // TODO:
 // Protected members are accessible by anything
 // that we inherit from, as well as ?

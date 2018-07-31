@@ -97,32 +97,35 @@ SDLGraphicsProgram::~SDLGraphicsProgram(){
         SDL_Quit();
 }
 
-for (int i = 0; i < 64; i++) {
-        markerNodes.push_back(new SceneNode(Sphere()));
-}
-
-SceneNode* root;
 
 //Loops forever!
 void SDLGraphicsProgram::loop(){
 
         MarkerType currType;
-        Layer* currLayer;
+        markerNodes.clear();
+
+
+        for (int i = 0; i < 64; i++) {
+                markerNodes.push_back(new SceneNode(new Sphere())); //TODO
+        }
+
+        SceneNode* root;
 
         //loads textures for scenenodes
         for (int i = 0; i < 4; i++) {
-                currLayer* = game.getLayer(i);
+                Layer currLayer = game.getLayer(i);
                 for (int j = 0; j < 16; j++) {
-                        currType = currLayer->getMarkerType(j);
+                        currType = currLayer.getMarkerType(j);
                         switch (currType) {
                         case Naught:
-                                markerNodes[i * 16 + j].object->LoadTexture("rock.ppm");
+                                markerNodes[i * 16 + j]->getObject()->LoadTexture("rock.ppm");
                                 break;
                         case Cross:
-                                markerNodes[i * 16 + j].object->LoadTexture("sun.ppm");
+                                markerNodes[i * 16 + j]->getObject()->LoadTexture("sun.ppm");
                                 break;
                         case Empty:
-                                markerNodes[i * 16 + j].object->LoadTexture("earth.ppm");
+                                markerNodes[i * 16 + j]->getObject()->LoadTexture("earth.ppm");
+                                break;
                         }
                 }
         }
@@ -228,33 +231,60 @@ void SDLGraphicsProgram::getOpenGLVersionInfo(){
         SDL_Log("Shading language: %s",(const char*)glGetString(GL_SHADING_LANGUAGE_VERSION));
 }
 
-void SDLGraphicsProgram::add3R(int rowRoot) {
-        for (int i = 1; i <= 3; i++) {
-                markerNodes[rowRoot]->AddChild(markerNodes[rowRoot+i]);
-                markerNodes[rowRoot + i]->getLocalTransform().loadIdentity();
-                markerNodes[rowRoot + i]->getLocalTransform().translate(2.0f, 0.0f, 0.0f);
+void SDLGraphicsProgram::add3R(int rowRoot) { //1D
+  cout << "filling row..." << endl;
+        for (int i = 1; i <= 4; i++) {
+          cout << rowRoot << "  ";
+
+          if (i != 4) {
+                markerNodes[rowRoot]->AddChild(markerNodes[rowRoot+1]);
+              }
+
+
+                if (i != 1) { // original root node
+                markerNodes[rowRoot]->getLocalTransform().translate(3.0f, 0.0f, 0.0f);
+              }
+
                 rowRoot = rowRoot + 1;
         }
 }
 
-void SDLGraphicsProgram::fillLayer(int layerRoot) {
+void SDLGraphicsProgram::fillLayer(int layerRoot) { //2D
+  cout << "filling layer..." << endl;
+        for (int i = 1; i <= 4; i++) {
+          cout << layerRoot << endl;
+          if (i != 4) {
+                markerNodes[layerRoot]->AddChild(markerNodes[layerRoot + 4]);
+              }
 
-        for (int i = 0; i < 3; i++) {
-                markerNodes[layerRoot]->AddChild(markerNodes[layerRoot + (16 * i)]);
-                markerNodes[layerRoot]->getLocalTransform().loadIdentity();
-                markerNodes[layerRoot]->getLocalTransform().translate(0.0f,0.0f,2.0f);
+                if (i != 1) { // original root node
+                  markerNodes[layerRoot]->getLocalTransform().translate(0.0f,0.0f,3.0f);
+                }
                 add3R(layerRoot);
-                layerRoot = layerRoot + 16;
+                layerRoot = layerRoot + 4;
         }
 
 }
 
-void SDLGraphicsProgram::fillBoard(int root) {
-        for (int i = 0; i < 3; i++) {
-                markerNodes[root]->AddChild(markerNodes[root + (16 * i)]);
+//root is 0
+void SDLGraphicsProgram::fillBoard(int root) { //3D
+  cout << "filling board..." << endl;
+
+      for (int j = 0; j < 64; j++) {
+        markerNodes[j]->getLocalTransform().loadIdentity();
+      }
+
+
+        for (int i = 1; i <= 4; i++) {
+          cout << root << endl << endl;
+                fillLayer(root);
+              if (i != 4) {
+                markerNodes[root]->AddChild(markerNodes[root + 16]);
+              }
                 markerNodes[root]->getLocalTransform().loadIdentity();
-                if (i == 1 || i == 2 || i == 3) {
-                        markerNodes[root]->getLocalTransform().translate(0.0f,-2.0f,0.0f);
+                if (i != 1) { // original root node
+                        markerNodes[root]->getLocalTransform().translate(0.0f,-3.0f,0.0f);
                 }
+                root = root + 16;
         }
 }
