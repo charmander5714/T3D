@@ -7,7 +7,7 @@
 // Camera constructor
 Camera::Camera(){
 								std::cout << "(Camera.cpp) Constructor called\n";
-								eyePosition = glm::vec3(0.0f,0.0f, 15.0f); // FIX: Typically this should be 0,0,0, but I moved for our assignment.
+								eyePosition = glm::vec3(0.0f,0.0f, 30.0f); // FIX: Typically this should be 0,0,0, but I moved for our assignment.
 								viewDirection = glm::vec3(0.0f,0.0f, -1.0f);
 								upVector = glm::vec3(0.0f, 1.0f, 0.0f);
 
@@ -18,13 +18,24 @@ void Camera::mouseLook(int mouseX, int mouseY){
 								glm::vec2 newMousePosition(mouseX, mouseY);
 								// Detect how much the mouse has moved since
 								// the last time
-								glm::vec2 mouseDelta = 0.01f*(newMousePosition-oldMousePosition)
-								;
+								glm::vec2 mouseDelta = 0.01f*(newMousePosition-oldMousePosition);
 								viewDirection = glm::mat3(glm::rotate(-mouseDelta.x, upVector)) *
 																								viewDirection;
 
 								// Update our old position after we have made changes
 								oldMousePosition = newMousePosition;
+}
+
+void Camera::rotateWorld(int mouseX, int mouseY) {
+	glm::vec2 newMousePosition(mouseX, mouseY);
+	glm::vec2 mouseDelta = 0.01f*(newMousePosition-oldMousePosition);
+	viewDirection = glm::mat3(glm::rotate(-mouseDelta.x, upVector)) * viewDirection;
+	float eyePositionX = -mouseDelta.x * cos(rotateWorldRadius);
+	float eyePositionY = -mouseDelta.x * sin(rotateWorldRadius);
+	eyePosition = glm::vec3(eyePositionX, 0.0f, eyePositionY);
+
+
+oldMousePosition = newMousePosition;
 }
 
 void Camera::moveForward(float speed){

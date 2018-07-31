@@ -16,18 +16,30 @@ public:
 
     // Constructor for the Sphere
     Sphere();
+    Sphere(float r);
     // The intialization routine for this object.
     void init();
+    void init(float r);
+
+    float radius = 1.0f;
 
 
 };
 
 // Calls the initalization routine
 Sphere::Sphere(){
-    std::cout << "(Sphere.cpp) Sphere constructor called (derived from Object)\n";
+    //std::cout << "(Sphere.cpp) Sphere constructor called (derived from Object)\n";
     init();
 }
 
+Sphere::Sphere(float r){
+  init(r);
+}
+
+void Sphere::init(float r) {
+  radius = r;
+  init();
+}
 
 // Algorithm for rendering a sphere
 // The algorithm was obtained here: http://learningwebgl.com/blog/?p=1253
@@ -37,7 +49,6 @@ Sphere::Sphere(){
 void Sphere::init(){
     unsigned int latitudeBands = 30;
     unsigned int longitudeBands = 30;
-    float radius = 1.0f;
     double PI = 3.14159265359;
 
         for(unsigned int latNumber = 0; latNumber <= latitudeBands; latNumber++){

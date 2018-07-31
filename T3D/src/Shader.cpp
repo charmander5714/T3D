@@ -2,7 +2,7 @@
 
 // Constructor
 Shader::Shader(){
-	std::cout << "(Shader.cpp) Constructor Called\n";
+	//std::cout << "(Shader.cpp) Constructor Called\n";
 }
 
 // Destructor
@@ -126,7 +126,7 @@ bool Shader::CheckLinkStatus(GLuint programID){
 
   #if defined(MINGW)
 	// do nothing
-	Log("WARNING","CheckLinkStatus is not implemented for windows folks"); 
+	Log("WARNING","CheckLinkStatus is not implemented for windows folks");
   #else
 	// Link our shaders
 	// id is the type of shader (Vertex, fragment, etc.)

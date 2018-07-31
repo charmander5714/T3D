@@ -3,7 +3,7 @@
 
 // The constructor
 SceneNode::SceneNode(Object* ob){
-								std::cout << "(SceneNode.cpp) Constructor called\n";
+								//std::cout << "(SceneNode.cpp) Constructor called\n";
 								object = ob;
 								// By default, we do not know the parent
 								// at the time of construction of this node.

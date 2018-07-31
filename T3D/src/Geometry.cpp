@@ -7,7 +7,7 @@
 
 // Constructor for the geometry routine
 Geometry::Geometry(){
-    std::cout << "(Geometry.h) Constructor Called\n";
+    //std::cout << "(Geometry.h) Constructor Called\n";
 }
 
 // Destructor for geometry
@@ -35,7 +35,7 @@ void Geometry::addVertex(float x, float y, float z){
     BiTangents.push_back(1.0f);
 }
 
-// Allows for adding one index at a time manually if 
+// Allows for adding one index at a time manually if
 // you know which vertices are needed to make a triangle.
 void Geometry::addIndex(unsigned int i){
     // Simple bounds check to make sure a valid index is added.
@@ -85,8 +85,8 @@ void Geometry::gen(){
         allData.push_back(normals[i*3+1]);
         allData.push_back(normals[i*3+2]);
         // texture information
-        allData.push_back(textureCoords[coordsPos*2+0]); 
-        allData.push_back(textureCoords[coordsPos*2+1]); 
+        allData.push_back(textureCoords[coordsPos*2+0]);
+        allData.push_back(textureCoords[coordsPos*2+1]);
         ++coordsPos;
         // tangents
         allData.push_back(Tangents[i*3+0]);
@@ -107,14 +107,14 @@ void Geometry::makeTriangle(unsigned int vert0, unsigned int vert1, unsigned int
     indices.push_back(vert2);
 
     // Look up the actual vertex positions
-    glm::vec3 pos0(vertexPositions[vert0*3 +0], vertexPositions[vert0*3 + 1], vertexPositions[vert0*3 + 2]); 
-    glm::vec3 pos1(vertexPositions[vert1*3 +0], vertexPositions[vert1*3 + 1], vertexPositions[vert1*3 + 2]); 
-    glm::vec3 pos2(vertexPositions[vert2*3 +0], vertexPositions[vert2*3 + 1], vertexPositions[vert2*3 + 2]); 
+    glm::vec3 pos0(vertexPositions[vert0*3 +0], vertexPositions[vert0*3 + 1], vertexPositions[vert0*3 + 2]);
+    glm::vec3 pos1(vertexPositions[vert1*3 +0], vertexPositions[vert1*3 + 1], vertexPositions[vert1*3 + 2]);
+    glm::vec3 pos2(vertexPositions[vert2*3 +0], vertexPositions[vert2*3 + 1], vertexPositions[vert2*3 + 2]);
 
     // Look up the texture coordinates
-    glm::vec2 tex0(textureCoords[vert0*2 +0], textureCoords[vert0*2 + 1]); 
-    glm::vec2 tex1(textureCoords[vert1*2 +0], textureCoords[vert1*2 + 1]); 
-    glm::vec2 tex2(textureCoords[vert2*2 +0], textureCoords[vert2*2 + 1]); 
+    glm::vec2 tex0(textureCoords[vert0*2 +0], textureCoords[vert0*2 + 1]);
+    glm::vec2 tex1(textureCoords[vert1*2 +0], textureCoords[vert1*2 + 1]);
+    glm::vec2 tex2(textureCoords[vert2*2 +0], textureCoords[vert2*2 + 1]);
 
     // Now create an edge
     // With two edges
@@ -140,22 +140,22 @@ void Geometry::makeTriangle(unsigned int vert0, unsigned int vert1, unsigned int
     bitangent.y = f * (-deltaUV1.x * edge0.y + deltaUV0.x* edge1.y);
     bitangent.z = f * (-deltaUV1.x * edge0.z + deltaUV0.x* edge1.z);
     bitangent = glm::normalize(bitangent);
-    
+
     // Compute a normal
     // For now we sort of 'cheat' since this is a quad the 'z' axis points straight out
-    normals[vert0*3+0] = 0.0f;	normals[vert0*3+1] = 0.0f;	normals[vert0*3+2] = 1.0f;	
-    normals[vert1*3+0] = 0.0f;	normals[vert1*3+1] = 0.0f;	normals[vert1*3+2] = 1.0f;	
-	normals[vert2*3+0] = 0.0f;	normals[vert2*3+1] = 0.0f;	normals[vert2*3+2] = 1.0f;	
-    
+    normals[vert0*3+0] = 0.0f;	normals[vert0*3+1] = 0.0f;	normals[vert0*3+2] = 1.0f;
+    normals[vert1*3+0] = 0.0f;	normals[vert1*3+1] = 0.0f;	normals[vert1*3+2] = 1.0f;
+	normals[vert2*3+0] = 0.0f;	normals[vert2*3+1] = 0.0f;	normals[vert2*3+2] = 1.0f;
+
     // Compute a tangent
-    Tangents[vert0*3+0] = tangent.x; Tangents[vert0*3+1] = tangent.y; Tangents[vert0*3+2] = tangent.z;	
-    Tangents[vert1*3+0] = tangent.x; Tangents[vert1*3+1] = tangent.y; Tangents[vert1*3+2] = tangent.z;	
-    Tangents[vert2*3+0] = tangent.x; Tangents[vert2*3+1] = tangent.y; Tangents[vert2*3+2] = tangent.z;	
+    Tangents[vert0*3+0] = tangent.x; Tangents[vert0*3+1] = tangent.y; Tangents[vert0*3+2] = tangent.z;
+    Tangents[vert1*3+0] = tangent.x; Tangents[vert1*3+1] = tangent.y; Tangents[vert1*3+2] = tangent.z;
+    Tangents[vert2*3+0] = tangent.x; Tangents[vert2*3+1] = tangent.y; Tangents[vert2*3+2] = tangent.z;
 
     // Compute a bi-tangent
-    BiTangents[vert0*3+0] = bitangent.x; BiTangents[vert0*3+1] = bitangent.y; BiTangents[vert0*3+2] = bitangent.z;	
-    BiTangents[vert1*3+0] = bitangent.x; BiTangents[vert1*3+1] = bitangent.y; BiTangents[vert1*3+2] = bitangent.z;	
-    BiTangents[vert2*3+0] = bitangent.x; BiTangents[vert2*3+1] = bitangent.y; BiTangents[vert2*3+2] = bitangent.z;	
+    BiTangents[vert0*3+0] = bitangent.x; BiTangents[vert0*3+1] = bitangent.y; BiTangents[vert0*3+2] = bitangent.z;
+    BiTangents[vert1*3+0] = bitangent.x; BiTangents[vert1*3+1] = bitangent.y; BiTangents[vert1*3+2] = bitangent.z;
+    BiTangents[vert2*3+0] = bitangent.x; BiTangents[vert2*3+1] = bitangent.y; BiTangents[vert2*3+2] = bitangent.z;
 }
 
 // Returns number of indicies

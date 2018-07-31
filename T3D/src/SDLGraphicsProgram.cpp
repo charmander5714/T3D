@@ -109,6 +109,10 @@ void SDLGraphicsProgram::loop(){
                 markerNodes.push_back(new SceneNode(new Sphere())); //TODO
         }
 
+        for (int j = 0; j < 64; j++) {
+          markerNodes[j]->getLocalTransform().loadIdentity();
+        }
+
         SceneNode* root;
 
         //loads textures for scenenodes
@@ -136,6 +140,8 @@ void SDLGraphicsProgram::loop(){
 
 
 
+
+
         root = markerNodes[0];
 
         renderer->setRoot(root);
@@ -151,6 +157,7 @@ void SDLGraphicsProgram::loop(){
         // Event handler that handles various events in SDL
         // that are related to input and output
         SDL_Event e;
+        SDL_Event f;
         // Enable text input
         SDL_StartTextInput();
 
@@ -162,6 +169,11 @@ void SDLGraphicsProgram::loop(){
 
         while(!quit) {
 
+          // if (tick == 64) {
+          //   tick = 0;
+          // }
+          // markerNodes[tick]->getObject()-> LoadTexture("sun.ppm");
+          // tick++;
 
                 //Handle events on queue
                 while(SDL_PollEvent( &e ) != 0) {
@@ -170,13 +182,42 @@ void SDLGraphicsProgram::loop(){
                         if(e.type == SDL_QUIT) {
                                 quit = true;
                         }
+
+
+
                         // Handle keyboad input for the camera class
-                        if(e.type==SDL_MOUSEMOTION) {
-                                // Handle mouse movements
-                                int mouseX = e.motion.x;
-                                int mouseY = e.motion.y;
-                                //renderer->camera->mouseLook(mouseX, mouseY);
-                        }
+                      //   if(e.type==SDL_MOUSEBUTTONDOWN && e.button.state == SDL_PRESSED) {
+                      //     cout << "mouse click detected" << endl;
+                      //
+                      //     while(SDL_PollEvent ( &f ) !=0) {
+                      //         if (f.type==SDL_MOUSEMOTION) {
+                      //           cout << "clicked mouse motion detected" << endl;
+                      //           // Handle mouse movements
+                      //           int mouseX = e.motion.x;
+                      //           int mouseY = e.motion.y;
+                      //           //renderer->camera->rotateWorld(mouseX, mouseY);
+                      //
+                      //           renderer->camera->mouseLook(mouseX, mouseY);
+                      //   }
+                      // }
+                      // }
+
+                      if (e.type==SDL_MOUSEMOTION) {
+                       cout << "mouse motion detected" << endl;
+
+                             // Handle mouse movements
+                             int mouseX = e.motion.x;
+                             int mouseY = e.motion.y;
+                             //renderer->camera->rotateWorld(mouseX, mouseY);
+                             if (SDL_BUTTON_LMASK) {
+                               cout << "mouse click detected" << endl;
+                               //renderer->camera->rotateWorld(mouseX, mouseY);
+                             }
+                             else {
+                             renderer->camera->mouseLook(mouseX, mouseY);
+                           }
+                     }
+
                         switch(e.type) {
                         // Handle keyboard presses
                         case SDL_KEYDOWN:
@@ -232,9 +273,9 @@ void SDLGraphicsProgram::getOpenGLVersionInfo(){
 }
 
 void SDLGraphicsProgram::add3R(int rowRoot) { //1D
-  cout << "filling row..." << endl;
+  //cout << "filling row..." << endl;
         for (int i = 1; i <= 4; i++) {
-          cout << rowRoot << "  ";
+          //cout << rowRoot << "  ";
 
           if (i != 4) {
                 markerNodes[rowRoot]->AddChild(markerNodes[rowRoot+1]);
@@ -250,9 +291,9 @@ void SDLGraphicsProgram::add3R(int rowRoot) { //1D
 }
 
 void SDLGraphicsProgram::fillLayer(int layerRoot) { //2D
-  cout << "filling layer..." << endl;
+  //cout << "filling layer..." << endl;
         for (int i = 1; i <= 4; i++) {
-          cout << layerRoot << endl;
+          //cout << layerRoot << endl;
           if (i != 4) {
                 markerNodes[layerRoot]->AddChild(markerNodes[layerRoot + 4]);
               }
@@ -268,20 +309,18 @@ void SDLGraphicsProgram::fillLayer(int layerRoot) { //2D
 
 //root is 0
 void SDLGraphicsProgram::fillBoard(int root) { //3D
-  cout << "filling board..." << endl;
+  //cout << "filling board..." << endl;
 
-      for (int j = 0; j < 64; j++) {
-        markerNodes[j]->getLocalTransform().loadIdentity();
-      }
+
 
 
         for (int i = 1; i <= 4; i++) {
-          cout << root << endl << endl;
+          //cout << root << endl << endl;
                 fillLayer(root);
               if (i != 4) {
                 markerNodes[root]->AddChild(markerNodes[root + 16]);
               }
-                markerNodes[root]->getLocalTransform().loadIdentity();
+
                 if (i != 1) { // original root node
                         markerNodes[root]->getLocalTransform().translate(0.0f,-3.0f,0.0f);
                 }

@@ -1,6 +1,6 @@
 /** @file Camera.h
  *  @brief Sets up an OpenGL camera.
- *  
+ *
  *  Sets up an OpenGL Camera. The camera is what
  *  sets up our 'view' matrix.
  *
@@ -22,6 +22,7 @@ public:
     glm::mat4 getWorldToViewmatrix() const;
     // Move the camera around
     void mouseLook(int mouseX, int mouseY);
+    void rotateWorld(int mouseX, int mouseY);
     void moveForward(float speed);
     void moveBackward(float speed);
     void moveLeft(float speed);
@@ -49,6 +50,8 @@ private:
     // to 'rock' or 'rattle' the camera you might play
     // with modifying this value.
     glm::vec3 upVector;
+
+    float rotateWorldRadius = 100.0f;
 };
 
 
