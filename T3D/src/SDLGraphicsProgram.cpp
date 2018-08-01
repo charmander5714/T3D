@@ -101,6 +101,8 @@ SDLGraphicsProgram::~SDLGraphicsProgram(){
 //Loops forever!
 void SDLGraphicsProgram::loop(){
 
+
+// ---------- Assigns textures to markers ------------//
         MarkerType currType;
         markerNodes.clear();
 
@@ -140,7 +142,7 @@ void SDLGraphicsProgram::loop(){
 
 
 
-
+//---------- creates marker (Scenenode) associations for placement in board grid -----//
 
         root = markerNodes[0];
 
@@ -148,8 +150,6 @@ void SDLGraphicsProgram::loop(){
 
         fillBoard(0);
 
-
-        // ================== Use the planets ===============
 
         // Main loop flag
         // If this is quit = 'true' then the program terminates.
@@ -172,16 +172,21 @@ void SDLGraphicsProgram::loop(){
         glm::vec3 boardCenter = findBoardCenter();
         cout << "board center: "<< boardCenter.x <<" " << boardCenter.y << " " << boardCenter.z << endl;
         cout << "z: " << boardCenter.z - rotateWorldRadius << endl;
-        renderer->camera->warpCamera(glm::vec3(boardCenter.x, boardCenter.y, boardCenter.z - rotateWorldRadius));
+        renderer->camera->warpCamera(glm::vec3(boardCenter.x, -boardCenter.y, boardCenter.z - rotateWorldRadius));
 
 
         while(!quit) {
 
+
+
+                // nothing exciting
                 if (tick == 64) {
                         tick = 0;
                 }
                 markerNodes[tick]->getObject()->LoadTexture("sun.ppm");
                 tick++;
+
+
 
                 //Handle events on queue
                 while(SDL_PollEvent( &e ) != 0) {
@@ -191,24 +196,6 @@ void SDLGraphicsProgram::loop(){
                                 quit = true;
                         }
 
-
-
-                        // Handle keyboad input for the camera class
-                        //   if(e.type==SDL_MOUSEBUTTONDOWN && e.button.state == SDL_PRESSED) {
-                        //     cout << "mouse click detected" << endl;
-                        //
-                        //     while(SDL_PollEvent ( &f ) !=0) {
-                        //         if (f.type==SDL_MOUSEMOTION) {
-                        //           cout << "clicked mouse motion detected" << endl;
-                        //           // Handle mouse movements
-                        //           int mouseX = e.motion.x;
-                        //           int mouseY = e.motion.y;
-                        //           //renderer->camera->rotateWorld(mouseX, mouseY);
-                        //
-                        //           renderer->camera->mouseLook(mouseX, mouseY);
-                        //   }
-                        // }
-                        // }
 
                         if (e.type==SDL_MOUSEBUTTONDOWN) {
                                 buttonState = true;
@@ -222,19 +209,17 @@ void SDLGraphicsProgram::loop(){
                         }
 
                         if (e.type==SDL_MOUSEMOTION && buttonState) {
-                            //    cout << "mouse motion detected" << endl;
+                                //    cout << "mouse motion detected" << endl;
 
                                 // Handle mouse movements
                                 int mouseX = e.motion.x;
                                 int mouseY = e.motion.y;
-                                renderer->camera->rotateWorld(mouseX, mouseY, boardCenter, rotateWorldRadius);
-                                //if (SDL_BUTTON_LMASK) {
-                              //  cout << "mouse click detected" << endl;
-                                //renderer->camera->rotateWorld(mouseX, mouseY);
-                                // else {
-                                //         cout << "voidmouse click not detected" << endl;
-                                //         renderer->camera->mouseLook(mouseX, mouseY);
-                                // }
+                                float mouseDelta = renderer->camera->getMouseDelta(mouseX, mouseY).x; // in rads
+
+                                renderer->camera->warpCamera(glm::vec3(boardCenter.x, -boardCenter.y, boardCenter.z - rotateWorldRadius));
+                                markerNodes[0]->getLocalTransform().rotate(mouseDelta, 0.0f, boardCenter.y, 0.0f);
+
+
                         }
 
                         switch(e.type) {
@@ -348,12 +333,14 @@ void SDLGraphicsProgram::fillBoard(int root) { //3D
 }
 
 glm::vec3 SDLGraphicsProgram::findBoardCenter() {
+        GLfloat* tMatrix = markerNodes[0]->getLocalTransform().getTransformMatrix();
+        cout << "aaaaaaaaaaa: " << tMatrix[0] << endl;
 
-float xCenter = sphereSpacing * 3 / 2;
-float yCenter = sphereSpacing * 3 / 2;
-float zCenter = sphereSpacing * 3 / 2;
+        float xCenter = sphereSpacing * 3 / 2 + 0;
+        float yCenter = sphereSpacing * 3 / 2 + 0;
+        float zCenter = sphereSpacing * 3 / 2 + 0;
 
-return glm::vec3(xCenter, yCenter, zCenter);
+        return glm::vec3(xCenter, yCenter, zCenter);
 
 
 
