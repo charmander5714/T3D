@@ -22,7 +22,8 @@ public:
     glm::mat4 getWorldToViewmatrix() const;
     // Move the camera around
     void mouseLook(int mouseX, int mouseY);
-    void rotateWorld(int mouseX, int mouseY);
+    void rotateWorld(int mouseX, int mouseY, glm::vec3 boardCenter, float rotateWorldRadius);
+    void warpCamera(glm::vec3 newPosition);
     void moveForward(float speed);
     void moveBackward(float speed);
     void moveLeft(float speed);
@@ -51,7 +52,7 @@ private:
     // with modifying this value.
     glm::vec3 upVector;
 
-    float rotateWorldRadius = 100.0f;
+    
 };
 
 

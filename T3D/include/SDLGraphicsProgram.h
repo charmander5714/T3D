@@ -69,6 +69,12 @@ void add3R(int rowRoot);
 void fillLayer(int layerRoot);
 
 void fillBoard(int root);
+
+glm::vec3 findBoardCenter();
+
+float sphereSpacing = 4.0f;
+
+float rotateWorldRadius = 30.0f;
 };
 
 #endif

@@ -4,11 +4,13 @@
 
 #include <iostream>
 
+using namespace std;
+
 // Camera constructor
 Camera::Camera(){
 								std::cout << "(Camera.cpp) Constructor called\n";
 								eyePosition = glm::vec3(0.0f,0.0f, 30.0f); // FIX: Typically this should be 0,0,0, but I moved for our assignment.
-								viewDirection = glm::vec3(0.0f,0.0f, -1.0f);
+								viewDirection = glm::vec3(0.0f,0.0f, 1.0f);
 								upVector = glm::vec3(0.0f, 1.0f, 0.0f);
 
 }
@@ -26,18 +28,26 @@ void Camera::mouseLook(int mouseX, int mouseY){
 								oldMousePosition = newMousePosition;
 }
 
-void Camera::rotateWorld(int mouseX, int mouseY) {
+void Camera::rotateWorld(int mouseX, int mouseY, glm::vec3 boardCenter, float rotateWorldRadius) {
+	cout << " " << getEyeXPosition() << " " << getEyeYPosition() << " " << getEyeZPosition() <<  "  ";
 								glm::vec2 newMousePosition(mouseX, mouseY);
-								glm::vec2 mouseDelta = 0.01f*(newMousePosition-oldMousePosition);
+								glm::vec2 mouseDelta = 0.1f*(newMousePosition-oldMousePosition);
+
+								float eyePositionX = boardCenter.x + rotateWorldRadius * cos(mouseDelta.x );
+								float eyePositionZ = boardCenter.z + rotateWorldRadius * sin(mouseDelta.x );
+								eyePosition = glm::vec3(eyePositionX, boardCenter.y, eyePositionZ);
+
 								viewDirection = glm::mat3(glm::rotate(-mouseDelta.x, upVector)) * viewDirection;
-								// float eyePositionX = -mouseDelta.x * cos(rotateWorldRadius);
-								// float eyePositionY = -mouseDelta.x * sin(rotateWorldRadius);
-								float eyePositionX = eyePositionX + 1;
-								float eyePositionY = eyePositionY + 1;
-								eyePosition = glm::vec3(eyePositionX, getEyeYPosition(), eyePositionY);
+
+								//float eyePositionX = eyePositionX + 1;
+								//float eyePositionY = eyePositionY + 1;
 
 
 								oldMousePosition = newMousePosition;
+}
+
+void Camera::warpCamera(glm::vec3 newPosition) {
+	eyePosition = newPosition;
 }
 
 void Camera::moveForward(float speed){

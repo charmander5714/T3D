@@ -169,6 +169,12 @@ void SDLGraphicsProgram::loop(){
 
         bool buttonState = false;
 
+        glm::vec3 boardCenter = findBoardCenter();
+        cout << "board center: "<< boardCenter.x <<" " << boardCenter.y << " " << boardCenter.z << endl;
+        cout << "z: " << boardCenter.z - rotateWorldRadius << endl;
+        renderer->camera->warpCamera(glm::vec3(boardCenter.x, boardCenter.y, boardCenter.z - rotateWorldRadius));
+
+
         while(!quit) {
 
                 if (tick == 64) {
@@ -206,24 +212,27 @@ void SDLGraphicsProgram::loop(){
 
                         if (e.type==SDL_MOUSEBUTTONDOWN) {
                                 buttonState = true;
+                                //cout << "is true\n";
+
                         }
 
                         else if(e.type==SDL_MOUSEBUTTONUP) {
                                 buttonState = false;
+                                //cout << "is false\n";
                         }
 
                         if (e.type==SDL_MOUSEMOTION && buttonState) {
-                                cout << "mouse motion detected" << endl;
+                            //    cout << "mouse motion detected" << endl;
 
                                 // Handle mouse movements
                                 int mouseX = e.motion.x;
                                 int mouseY = e.motion.y;
-                                renderer->camera->mouseLook(mouseX, mouseY);
+                                renderer->camera->rotateWorld(mouseX, mouseY, boardCenter, rotateWorldRadius);
                                 //if (SDL_BUTTON_LMASK) {
-                                cout << "mouse click detected" << endl;
+                              //  cout << "mouse click detected" << endl;
                                 //renderer->camera->rotateWorld(mouseX, mouseY);
                                 // else {
-                                //         cout << "mouse click not detected" << endl;
+                                //         cout << "voidmouse click not detected" << endl;
                                 //         renderer->camera->mouseLook(mouseX, mouseY);
                                 // }
                         }
@@ -293,7 +302,7 @@ void SDLGraphicsProgram::add3R(int rowRoot) { //1D
 
 
                 if (i != 1) { // original root node
-                        markerNodes[rowRoot]->getLocalTransform().translate(3.0f, 0.0f, 0.0f);
+                        markerNodes[rowRoot]->getLocalTransform().translate(sphereSpacing, 0.0f, 0.0f);
                 }
 
                 rowRoot = rowRoot + 1;
@@ -309,7 +318,7 @@ void SDLGraphicsProgram::fillLayer(int layerRoot) { //2D
                 }
 
                 if (i != 1) { // original root node
-                        markerNodes[layerRoot]->getLocalTransform().translate(0.0f,0.0f,3.0f);
+                        markerNodes[layerRoot]->getLocalTransform().translate(0.0f,0.0f,sphereSpacing);
                 }
                 add3R(layerRoot);
                 layerRoot = layerRoot + 4;
@@ -332,8 +341,20 @@ void SDLGraphicsProgram::fillBoard(int root) { //3D
                 }
 
                 if (i != 1) { // original root node
-                        markerNodes[root]->getLocalTransform().translate(0.0f,-3.0f,0.0f);
+                        markerNodes[root]->getLocalTransform().translate(0.0f,-sphereSpacing,0.0f);
                 }
                 root = root + 16;
         }
+}
+
+glm::vec3 SDLGraphicsProgram::findBoardCenter() {
+
+float xCenter = sphereSpacing * 3 / 2;
+float yCenter = sphereSpacing * 3 / 2;
+float zCenter = sphereSpacing * 3 / 2;
+
+return glm::vec3(xCenter, yCenter, zCenter);
+
+
+
 }
