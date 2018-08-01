@@ -211,13 +211,17 @@ void SDLGraphicsProgram::loop(){
                         if (e.type==SDL_MOUSEMOTION && buttonState) {
                                 //    cout << "mouse motion detected" << endl;
 
+                                SceneNode* boardRoot = markerNodes[0];
+
                                 // Handle mouse movements
                                 int mouseX = e.motion.x;
                                 int mouseY = e.motion.y;
                                 float mouseDelta = renderer->camera->getMouseDelta(mouseX, mouseY).x; // in rads
 
                                 renderer->camera->warpCamera(glm::vec3(boardCenter.x, -boardCenter.y, boardCenter.z - rotateWorldRadius));
-                                markerNodes[0]->getLocalTransform().rotate(mouseDelta, 0.0f, boardCenter.y, 0.0f);
+                                boardRoot->getLocalTransform().translate(boardCenter.x, boardCenter.y, boardCenter.z);
+                                boardRoot->getLocalTransform().rotate(mouseDelta, 0.0f, boardCenter.y, 0.0f);
+                                boardRoot->getLocalTransform().translate(-boardCenter.x, -boardCenter.y, -boardCenter.z);
 
 
                         }
