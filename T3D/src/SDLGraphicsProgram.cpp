@@ -80,6 +80,8 @@ SDLGraphicsProgram::SDLGraphicsProgram(int w, int h){
 
         // Setup our Renderer
         renderer = new Renderer(w,h);
+
+        initGame();
 }
 
 
@@ -101,21 +103,8 @@ SDLGraphicsProgram::~SDLGraphicsProgram(){
 //Loops forever!
 void SDLGraphicsProgram::loop(){
 
-
 // ---------- Assigns textures to markers ------------//
         MarkerType currType;
-        markerNodes.clear();
-
-
-        for (int i = 0; i < 64; i++) {
-                markerNodes.push_back(new SceneNode(new Sphere())); //TODO
-        }
-
-        for (int j = 0; j < 64; j++) {
-                markerNodes[j]->getLocalTransform().loadIdentity();
-        }
-
-        SceneNode* root;
 
         //loads textures for scenenodes
         for (int i = 0; i < 4; i++) {
@@ -143,6 +132,7 @@ void SDLGraphicsProgram::loop(){
 
 
 //---------- creates marker (Scenenode) associations for placement in board grid -----//
+        SceneNode* root;
 
         root = markerNodes[0];
 
@@ -157,7 +147,7 @@ void SDLGraphicsProgram::loop(){
         // Event handler that handles various events in SDL
         // that are related to input and output
         SDL_Event e;
-        SDL_Event f;
+
         // Enable text input
         SDL_StartTextInput();
 
@@ -169,13 +159,12 @@ void SDLGraphicsProgram::loop(){
 
         bool buttonState = false;
 
+        //moves camera to view board
         glm::vec3 boardCenter = findBoardCenter();
-        cout << "board center: "<< boardCenter.x <<" " << boardCenter.y << " " << boardCenter.z << endl;
-        cout << "z: " << boardCenter.z - rotateWorldRadius << endl;
-        renderer->camera->warpCamera(glm::vec3(boardCenter.x, -boardCenter.y, boardCenter.z - rotateWorldRadius));
+        renderer->camera->warpCamera(glm::vec3(boardCenter.x, -boardCenter.y, boardCenter.z - cameraDistance));
 
 
-        while(!quit) {
+        while(!quit) { // ***** main loop
 
 
 
@@ -218,7 +207,9 @@ void SDLGraphicsProgram::loop(){
                                 int mouseY = e.motion.y;
                                 float mouseDelta = renderer->camera->getMouseDelta(mouseX, mouseY).x; // in rads
 
-                                renderer->camera->warpCamera(glm::vec3(boardCenter.x, -boardCenter.y, boardCenter.z - rotateWorldRadius));
+                                //renderer->camera->warpCamera(glm::vec3(boardCenter.x, -boardCenter.y, boardCenter.z - cameraDistance));
+
+                                // this rotates the board
                                 boardRoot->getLocalTransform().translate(boardCenter.x, boardCenter.y, boardCenter.z);
                                 boardRoot->getLocalTransform().rotate(mouseDelta, 0.0f, boardCenter.y, 0.0f);
                                 boardRoot->getLocalTransform().translate(-boardCenter.x, -boardCenter.y, -boardCenter.z);
@@ -280,7 +271,7 @@ void SDLGraphicsProgram::getOpenGLVersionInfo(){
         SDL_Log("Shading language: %s",(const char*)glGetString(GL_SHADING_LANGUAGE_VERSION));
 }
 
-void SDLGraphicsProgram::add3R(int rowRoot) { //1D
+void SDLGraphicsProgram::fillRows(int rowRoot) { //1D
         //cout << "filling row..." << endl;
         for (int i = 1; i <= 4; i++) {
                 //cout << rowRoot << "  ";
@@ -298,7 +289,7 @@ void SDLGraphicsProgram::add3R(int rowRoot) { //1D
         }
 }
 
-void SDLGraphicsProgram::fillLayer(int layerRoot) { //2D
+void SDLGraphicsProgram::fillLayers(int layerRoot) { //2D
         //cout << "filling layer..." << endl;
         for (int i = 1; i <= 4; i++) {
                 //cout << layerRoot << endl;
@@ -309,7 +300,7 @@ void SDLGraphicsProgram::fillLayer(int layerRoot) { //2D
                 if (i != 1) { // original root node
                         markerNodes[layerRoot]->getLocalTransform().translate(0.0f,0.0f,sphereSpacing);
                 }
-                add3R(layerRoot);
+                fillRows(layerRoot);
                 layerRoot = layerRoot + 4;
         }
 
@@ -324,7 +315,7 @@ void SDLGraphicsProgram::fillBoard(int root) { //3D
 
         for (int i = 1; i <= 4; i++) {
                 //cout << root << endl << endl;
-                fillLayer(root);
+                fillLayers(root);
                 if (i != 4) {
                         markerNodes[root]->AddChild(markerNodes[root + 16]);
                 }
@@ -346,6 +337,22 @@ glm::vec3 SDLGraphicsProgram::findBoardCenter() {
 
         return glm::vec3(xCenter, yCenter, zCenter);
 
+
+
+}
+
+void SDLGraphicsProgram::initGame() {
+
+  markerNodes.clear();
+
+
+  for (int i = 0; i < 64; i++) {
+          markerNodes.push_back(new SceneNode(new Sphere()));
+  }
+
+  for (int j = 0; j < 64; j++) {
+          markerNodes[j]->getLocalTransform().loadIdentity();
+  }
 
 
 }

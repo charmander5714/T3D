@@ -64,17 +64,19 @@ Game game;
 
 vector<SceneNode*> markerNodes;
 
-void add3R(int rowRoot);
+void fillRows(int rowRoot);
 
-void fillLayer(int layerRoot);
+void fillLayers(int layerRoot);
 
 void fillBoard(int root);
 
 glm::vec3 findBoardCenter();
 
+void initGame();
+
 float sphereSpacing = 4.0f;
 
-float rotateWorldRadius = 30.0f;
+float cameraDistance = 30.0f;
 };
 
 #endif

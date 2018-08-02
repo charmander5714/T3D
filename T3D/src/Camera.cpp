@@ -20,7 +20,7 @@ void Camera::mouseLook(int mouseX, int mouseY){
 								glm::vec2 newMousePosition(mouseX, mouseY);
 								// Detect how much the mouse has moved since
 								// the last time
-								glm::vec2 mouseDelta = 0.01f*(newMousePosition-oldMousePosition);
+								glm::vec2 mouseDelta = 0.005f*(newMousePosition-oldMousePosition);
 								viewDirection = glm::mat3(glm::rotate(-mouseDelta.x, upVector)) *
 																								viewDirection;
 
@@ -38,14 +38,14 @@ glm::vec2 Camera::getMouseDelta(int mouseX, int mouseY) {
 
 }
 
-void Camera::rotateWorld(int mouseX, int mouseY, glm::vec3 boardCenter, float rotateWorldRadius) {
+void Camera::rotateBoard(int mouseX, int mouseY, glm::vec3 boardCenter, float cameraDistance) {
 								cout << " " << getEyeXPosition() << " " << getEyeYPosition() << " " << getEyeZPosition() <<  "  " <<  endl;
 								glm::vec2 newMousePosition(mouseX, mouseY);
 								glm::vec2 mouseDelta = 0.01f*(newMousePosition-oldMousePosition);
 
-								// float eyePositionX = boardCenter.x + rotateWorldRadius * cos(mouseDelta.x );
-								// float eyePositionZ = boardCenter.z + rotateWorldRadius * sin(mouseDelta.x );
-								warpCamera(glm::vec3(boardCenter.x + (rotateWorldRadius * cos(mouseDelta.x)), boardCenter.y, boardCenter.z - (rotateWorldRadius * sin(mouseDelta.x))));
+								// float eyePositionX = boardCenter.x + cameraDistance * cos(mouseDelta.x );
+								// float eyePositionZ = boardCenter.z + cameraDistance * sin(mouseDelta.x );
+								warpCamera(glm::vec3(boardCenter.x + (cameraDistance * cos(mouseDelta.x)), boardCenter.y, boardCenter.z - (cameraDistance * sin(mouseDelta.x))));
 
 								viewDirection = glm::mat3(glm::rotate(-mouseDelta.x, upVector)) * viewDirection;
 

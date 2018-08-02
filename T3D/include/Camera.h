@@ -22,7 +22,7 @@ Camera();
 glm::mat4 getWorldToViewmatrix() const;
 // Move the camera around
 void mouseLook(int mouseX, int mouseY);
-void rotateWorld(int mouseX, int mouseY, glm::vec3 boardCenter, float rotateWorldRadius);
+void rotateBoard(int mouseX, int mouseY, glm::vec3 boardCenter, float cameraDistance);
 void warpCamera(glm::vec3 newPosition);
 glm::vec2 getMouseDelta(int mouseX, int mouseY);
 void moveForward(float speed);
