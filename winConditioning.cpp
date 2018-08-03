@@ -135,7 +135,7 @@ int checkWin(int board[64], int startPosition) //0 means no win met, 1 means pla
 		if(rowNumber == 4) {return(player);}
 	}
 	//15 to 48
-	if((startPosition%16+int(floor(startPosition/16))*5) ==15)
+	else if((startPosition%16+int(floor(startPosition/16))*5) ==15)
     {
     	for (rowNumber = 0; rowNumber < 4; )
 		{
