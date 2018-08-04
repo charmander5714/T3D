@@ -99,7 +99,7 @@ int checkWin(int board[64], int startPosition) //0 means no win met, 1 means pla
     {
     	for (rowNumber = 0; rowNumber < 4; )
 		{
-			if(board[startPosition%20 + 20*rowNumber] != player) {break;}
+			if(board[startPosition%12 + 12*rowNumber] != player) {break;}
 			rowNumber++;
 		}
 		if(rowNumber == 4) {return(player);}
