@@ -2,21 +2,18 @@
 #include <string>
 #include <math.h>
 using namespace std;
-int checkWin(int*, int);
+bool checkWin(int*, int);
 int main()
 {
   int gameBoard[64]= {0,0,0,0, 1,0,0,0, 0,0,0,0, 0,0,0,0, 
   					  0,0,0,0, 0,1,0,0, 0,0,0,0, 0,0,0,0, 
 					  0,0,0,0, 0,0,1,0, 0,0,0,0, 0,0,0,0, 
 					  0,0,0,0, 0,0,0,1, 0,0,0,0, 0,0,0,0};
-  int termination=checkWin(gameBoard, 21);
-  if(termination>0)
-  {cout << "Player "<<termination<<" Wins";}
-  else
-  {cout << "Continue";}
+  if (checkWin(gameBoard, 21))
+  {cout<<"Winner Winner Chicken Dinner";}
 }
 
-int checkWin(int board[64], int startPosition) //0 means no win met, 1 means player 1 wins, 2 means player 2 wins
+bool checkWin(int board[64], int startPosition) //0 means no win met, 1 means player 1 wins, 2 means player 2 wins
 {
     int result = 0; 
 	int player = board[startPosition];
@@ -29,21 +26,21 @@ int checkWin(int board[64], int startPosition) //0 means no win met, 1 means pla
 		if(board[startPosition%16+16*layerNumber]!=player) {break;}
 		layerNumber++;   	
 	}
-	if(layerNumber == 4) {return(player);}
+	if(layerNumber == 4) {return(true);}
 	//LEFT and RIGHT
 	for (columnNumber = 0; columnNumber < 4; )
 	{
 		if(board[startPosition - startPosition%4 + columnNumber] != player) {break;}
 		columnNumber++;
 	}
-	if(columnNumber == 4) {return(player);}
+	if(columnNumber == 4) {return(true);}
 	//FORWARD and BACKWARD
 	for (rowNumber = 0; rowNumber < 4; )
 	{
 		if(board[startPosition%4 + 4*rowNumber + startPosition - startPosition%16] != player) {break;}
 		rowNumber++;
 	}
-	if(rowNumber == 4) {return(player);}
+	if(rowNumber == 4) {return(true);}
     //Top Left to Bottom Right Same layer
     if((startPosition%16)%5 == 0)
     {
@@ -52,7 +49,7 @@ int checkWin(int board[64], int startPosition) //0 means no win met, 1 means pla
 			if(board[startPosition - startPosition%16 + 5*rowNumber] != player) {break;}
 			rowNumber++;
 		}
-		if(rowNumber == 4) {return(player);}
+		if(rowNumber == 4) {return(true);}
 	}
 	//Bottom Left to Top Right Same Layer
 	else if(((startPosition%16)%3 == 0) && ((startPosition+1)%16>1))
@@ -62,7 +59,7 @@ int checkWin(int board[64], int startPosition) //0 means no win met, 1 means pla
 			if(board[startPosition - startPosition%16 + 3*rowNumber+3] != player) {break;}
 			rowNumber++;
 		}
-		if(rowNumber == 4) {return(player);}
+		if(rowNumber == 4) {return(true);}
 	}
 	//Top layer Left Column to Bottom Layer Right Column
 	if((startPosition%16-int(floor(startPosition/16)))%4 == 0)
@@ -72,7 +69,7 @@ int checkWin(int board[64], int startPosition) //0 means no win met, 1 means pla
 			if(board[startPosition%17 + 17*rowNumber] != player) {break;}
 			rowNumber++;
 		}
-		if(rowNumber == 4) {return(player);}
+		if(rowNumber == 4) {return(true);}
 	}
 	//Top layer Right Column to Bottom Layer Left Column
 	else if((startPosition%16+int(floor(startPosition/16)))%4 == 3)
@@ -82,7 +79,7 @@ int checkWin(int board[64], int startPosition) //0 means no win met, 1 means pla
 			if(board[startPosition%15 + 15*rowNumber] != player) {break;}
 			rowNumber++;
 		}
-		if(rowNumber == 4) {return(player);}
+		if(rowNumber == 4) {return(true);}
 	}
 	//Top layer Back Row to Bottom Layer Front Row
 	if((startPosition%16-int(floor(startPosition/16))*4) < 4)
@@ -92,7 +89,7 @@ int checkWin(int board[64], int startPosition) //0 means no win met, 1 means pla
 			if(board[startPosition%20 + 20*rowNumber] != player) {break;}
 			rowNumber++;
 		}
-		if(rowNumber == 4) {return(player);}
+		if(rowNumber == 4) {return(true);}
 	}
 	//Top layer Front Row to Bottom Layer Back Row
 	else if((startPosition%16+int(floor(startPosition/16))*4)%16 > 11)
@@ -102,7 +99,7 @@ int checkWin(int board[64], int startPosition) //0 means no win met, 1 means pla
 			if(board[startPosition%12 + 12*rowNumber] != player) {break;}
 			rowNumber++;
 		}
-		if(rowNumber == 4) {return(player);}
+		if(rowNumber == 4) {return(true);}
 	}
 	//0 to 63
 	if((startPosition%16-int(floor(startPosition/16))*5) ==0)
@@ -112,7 +109,7 @@ int checkWin(int board[64], int startPosition) //0 means no win met, 1 means pla
 			if(board[0 + 21*rowNumber] != player) {break;}
 			rowNumber++;
 		}
-		if(rowNumber == 4) {return(player);}
+		if(rowNumber == 4) {return(true);}
 	}
 	//3 to 60
 	else if((startPosition%16-int(floor(startPosition/16))*3) == 3)
@@ -122,7 +119,7 @@ int checkWin(int board[64], int startPosition) //0 means no win met, 1 means pla
 			if(board[3 + 19*rowNumber] != player) {break;}
 			rowNumber++;
 		}
-		if(rowNumber == 4) {return(player);}
+		if(rowNumber == 4) {return(true);}
 	}
 	//12 to 51
 	else if((startPosition%16+int(floor(startPosition/16))*3) == 12)
@@ -132,7 +129,7 @@ int checkWin(int board[64], int startPosition) //0 means no win met, 1 means pla
 			if(board[12 + 13*rowNumber] != player) {break;}
 			rowNumber++;
 		}
-		if(rowNumber == 4) {return(player);}
+		if(rowNumber == 4) {return(true);}
 	}
 	//15 to 48
 	else if((startPosition%16+int(floor(startPosition/16))*5) ==15)
@@ -142,7 +139,7 @@ int checkWin(int board[64], int startPosition) //0 means no win met, 1 means pla
 			if(board[15 + 11*rowNumber] != player) {break;}
 			rowNumber++;
 		}
-		if(rowNumber == 4) {return(player);}
+		if(rowNumber == 4) {return(true);}
 	}
-	return(0);
+	return(false);
 }
