@@ -28,6 +28,8 @@
 
 #include "Renderer.h"
 #include "Game.h"
+#include "globalVariables.h"
+
 #include <vector>
 
 using namespace std;
@@ -36,7 +38,8 @@ using namespace std;
 // This class sets up a full graphics program using SDL
 //
 //
-//
+
+
 class SDLGraphicsProgram {
 public:
 

@@ -17,6 +17,10 @@ void setMarkerType(int layerID, int markerNumber, MarkerType type);
 
 Layer getLayer(int layerID);
 
+void setBoardView(bool input);
+
+bool getBoardView();
+
 
 private:
 
@@ -27,6 +31,8 @@ bool gameInProgress;
 bool playerTurn;
 
 int gameResult;
+
+bool boardView = true;
 
 
 

@@ -23,3 +23,11 @@ void Game::setMarkerType(int layerID, int markerNumber, MarkerType type) {
 Layer Game::getLayer(int layerID) {
         return board.getLayer(layerID);
 }
+
+void Game::setBoardView(bool input) {
+        boardView = input;
+}
+
+bool Game::getBoardView() {
+        return boardView;
+}

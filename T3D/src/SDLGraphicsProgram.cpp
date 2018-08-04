@@ -103,27 +103,28 @@ SDLGraphicsProgram::~SDLGraphicsProgram(){
 //Loops forever!
 void SDLGraphicsProgram::loop(){
 
+        if(game.getBoardView()) { // 3D view
 // ---------- Assigns textures to markers ------------//
-        MarkerType currType;
+                MarkerType currType;
 
-        //loads textures for scenenodes
-        for (int i = 0; i < 4; i++) {
-                Layer currLayer = game.getLayer(i);
-                for (int j = 0; j < 16; j++) {
-                        currType = currLayer.getMarkerType(j);
-                        switch (currType) {
-                        case Naught:
-                                markerNodes[i * 16 + j]->getObject()->LoadTexture("rock.ppm");
-                                break;
-                        case Cross:
-                                markerNodes[i * 16 + j]->getObject()->LoadTexture("sun.ppm");
-                                break;
-                        case Empty:
-                                markerNodes[i * 16 + j]->getObject()->LoadTexture("earth.ppm");
-                                break;
+                //loads textures for scenenodes
+                for (int i = 0; i < 4; i++) {
+                        Layer currLayer = game.getLayer(i);
+                        for (int j = 0; j < 16; j++) {
+                                currType = currLayer.getMarkerType(j);
+                                switch (currType) {
+                                case Naught:
+                                        markerNodes[i * 16 + j]->getObject()->LoadTexture("rock.ppm");
+                                        break;
+                                case Cross:
+                                        markerNodes[i * 16 + j]->getObject()->LoadTexture("sun.ppm");
+                                        break;
+                                case Empty:
+                                        markerNodes[i * 16 + j]->getObject()->LoadTexture("earth.ppm");
+                                        break;
+                                }
                         }
                 }
-        }
 
 
 
@@ -132,128 +133,135 @@ void SDLGraphicsProgram::loop(){
 
 
 //---------- creates marker (Scenenode) associations for placement in board grid -----//
-        SceneNode* root;
+                SceneNode* root;
 
-        root = markerNodes[0];
+                root = markerNodes[0];
 
-        renderer->setRoot(root);
+                renderer->setRoot(root);
 
-        fillBoard(0);
-
-
-        // Main loop flag
-        // If this is quit = 'true' then the program terminates.
-        bool quit = false;
-        // Event handler that handles various events in SDL
-        // that are related to input and output
-        SDL_Event e;
-
-        // Enable text input
-        SDL_StartTextInput();
-
-        // Set a default speed for the camera
-        float cameraSpeed = 0.05f;
-
-        // tick is just an arbitrary counter to generate orbits
-        int tick = 0;
-
-        bool buttonState = false;
-
-        //moves camera to view board
-        glm::vec3 boardCenter = findBoardCenter();
-        renderer->camera->warpCamera(glm::vec3(boardCenter.x, -boardCenter.y, boardCenter.z - cameraDistance));
+                fillBoard(0);
 
 
-        while(!quit) { // ***** main loop
+                // Main loop flag
+                // If this is quit = 'true' then the program terminates.
+                bool quit = false;
+                // Event handler that handles various events in SDL
+                // that are related to input and output
+                SDL_Event e;
+
+                // Enable text input
+                SDL_StartTextInput();
+
+                // Set a default speed for the camera
+                float cameraSpeed = 0.05f;
+
+                // tick is just an arbitrary counter to generate orbits
+                int tick = 0;
+
+                bool buttonState = false;
+
+                //moves camera to view board
+                glm::vec3 boardCenter = findBoardCenter();
+                renderer->camera->warpCamera(glm::vec3(boardCenter.x, -boardCenter.y, boardCenter.z - cameraDistance));
 
 
-
-                // nothing exciting
-                if (tick == 64) {
-                        tick = 0;
-                }
-                markerNodes[tick]->getObject()->LoadTexture("sun.ppm");
-                tick++;
+                while(!quit) { // ***** main loop
 
 
 
-                //Handle events on queue
-                while(SDL_PollEvent( &e ) != 0) {
-                        // User posts an event to quit
-                        // An example is hitting the "x" in the corner of the window.
-                        if(e.type == SDL_QUIT) {
-                                quit = true;
+                        // nothing exciting
+                        if (tick == 64) {
+                                tick = 0;
                         }
+                        markerNodes[tick]->getObject()->LoadTexture("sun.ppm");
+                        tick++;
 
 
-                        if (e.type==SDL_MOUSEBUTTONDOWN) {
-                                buttonState = true;
-                                //cout << "is true\n";
 
-                        }
-
-                        else if(e.type==SDL_MOUSEBUTTONUP) {
-                                buttonState = false;
-                                //cout << "is false\n";
-                        }
-
-                        if (e.type==SDL_MOUSEMOTION && buttonState) {
-                                //    cout << "mouse motion detected" << endl;
-
-                                SceneNode* boardRoot = markerNodes[0];
-
-                                // Handle mouse movements
-                                int mouseX = e.motion.x;
-                                int mouseY = e.motion.y;
-                                float mouseDelta = renderer->camera->getMouseDelta(mouseX, mouseY).x; // in rads
-
-                                //renderer->camera->warpCamera(glm::vec3(boardCenter.x, -boardCenter.y, boardCenter.z - cameraDistance));
-
-                                // this rotates the board
-                                boardRoot->getLocalTransform().translate(boardCenter.x, boardCenter.y, boardCenter.z);
-                                boardRoot->getLocalTransform().rotate(mouseDelta, 0.0f, boardCenter.y, 0.0f);
-                                boardRoot->getLocalTransform().translate(-boardCenter.x, -boardCenter.y, -boardCenter.z);
+                        //Handle events on queue
+                        while(SDL_PollEvent( &e ) != 0) {
+                                // User posts an event to quit
+                                // An example is hitting the "x" in the corner of the window.
+                                if(e.type == SDL_QUIT) {
+                                        quit = true;
+                                }
 
 
-                        }
+                                if (e.type==SDL_MOUSEBUTTONDOWN) {
+                                        buttonState = true;
+                                        //cout << "is true\n";
 
-                        switch(e.type) {
-                        // Handle keyboard presses
-                        case SDL_KEYDOWN:
-                                switch(e.key.keysym.sym) {
-                                case SDLK_LEFT:
-                                        renderer->camera->moveLeft(cameraSpeed);
-                                        break;
-                                case SDLK_RIGHT:
-                                        renderer->camera->moveRight(cameraSpeed);
-                                        break;
-                                case SDLK_UP:
-                                        renderer->camera->moveForward(cameraSpeed);
-                                        break;
-                                case SDLK_DOWN:
-                                        renderer->camera->moveBackward(cameraSpeed);
-                                        break;
-                                case SDLK_RSHIFT:
-                                        renderer->camera->moveUp(cameraSpeed);
-                                        break;
-                                case SDLK_RCTRL:
-                                        renderer->camera->moveDown(cameraSpeed);
+                                }
+
+                                else if(e.type==SDL_MOUSEBUTTONUP) {
+                                        buttonState = false;
+                                        //cout << "is false\n";
+                                }
+
+                                if (e.type==SDL_MOUSEMOTION && buttonState) {
+                                        //    cout << "mouse motion detected" << endl;
+
+                                        SceneNode* boardRoot = markerNodes[0];
+
+                                        // Handle mouse movements
+                                        int mouseX = e.motion.x;
+                                        int mouseY = e.motion.y;
+                                        float mouseDelta = renderer->camera->getMouseDelta(mouseX, mouseY).x; // in rads
+
+                                        //renderer->camera->warpCamera(glm::vec3(boardCenter.x, -boardCenter.y, boardCenter.z - cameraDistance));
+
+                                        // this rotates the board
+                                        boardRoot->getLocalTransform().translate(boardCenter.x, boardCenter.y, boardCenter.z);
+                                        boardRoot->getLocalTransform().rotate(mouseDelta, 0.0f, boardCenter.y, 0.0f);
+                                        boardRoot->getLocalTransform().translate(-boardCenter.x, -boardCenter.y, -boardCenter.z);
+
+
+                                }
+
+                                switch(e.type) {
+                                // Handle keyboard presses
+                                case SDL_KEYDOWN:
+                                        switch(e.key.keysym.sym) {
+                                        case SDLK_LEFT:
+                                                renderer->camera->moveLeft(cameraSpeed);
+                                                break;
+                                        case SDLK_RIGHT:
+                                                renderer->camera->moveRight(cameraSpeed);
+                                                break;
+                                        case SDLK_UP:
+                                                renderer->camera->moveForward(cameraSpeed);
+                                                break;
+                                        case SDLK_DOWN:
+                                                renderer->camera->moveBackward(cameraSpeed);
+                                                break;
+                                        case SDLK_RSHIFT:
+                                                renderer->camera->moveUp(cameraSpeed);
+                                                break;
+                                        case SDLK_RCTRL:
+                                                renderer->camera->moveDown(cameraSpeed);
+                                                break;
+                                        }
                                         break;
                                 }
-                                break;
-                        }
-                } // End SDL_PollEvent loop.
+                        } // End SDL_PollEvent loop.
 
-                // Update our scene through our renderer
-                renderer->Update();
-                // Render our scene using our selected renderer
-                renderer->Render();
-                // Delay to slow things down just a bit!
-                SDL_Delay(25);
-                //Update screen of our specified window
-                SDL_GL_SwapWindow(getSDLWindow());
-                // system("read -p 'Press Enter to continue...' var");
+                        // Update our scene through our renderer
+                        renderer->Update();
+                        // Render our scene using our selected renderer
+                        renderer->Render();
+                        // Delay to slow things down just a bit!
+                        SDL_Delay(25);
+                        //Update screen of our specified window
+                        SDL_GL_SwapWindow(getSDLWindow());
+                        // system("read -p 'Press Enter to continue...' var");
+                }
         }
+
+        else {
+
+
+        }
+
 
 }
 
@@ -343,16 +351,16 @@ glm::vec3 SDLGraphicsProgram::findBoardCenter() {
 
 void SDLGraphicsProgram::initGame() {
 
-  markerNodes.clear();
+        markerNodes.clear();
 
 
-  for (int i = 0; i < 64; i++) {
-          markerNodes.push_back(new SceneNode(new Sphere()));
-  }
+        for (int i = 0; i < 64; i++) {
+                markerNodes.push_back(new SceneNode(new Sphere()));
+        }
 
-  for (int j = 0; j < 64; j++) {
-          markerNodes[j]->getLocalTransform().loadIdentity();
-  }
+        for (int j = 0; j < 64; j++) {
+                markerNodes[j]->getLocalTransform().loadIdentity();
+        }
 
 
 }
