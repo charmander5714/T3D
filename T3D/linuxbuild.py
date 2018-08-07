@@ -25,7 +25,7 @@ INCLUDE_DIR="-I ./include/ -I ./thirdparty/glm/"
 LIBRARIES="-lSDL2 -ldl"
 
 # The name of our executable
-EXECUTABLE="lab"
+EXECUTABLE="T3D"
 
 # Build a string of our compile commands that we run in the terminal
 compileString=COMPILER+" "+ARGUMENTS+" -o "+EXECUTABLE+" "+" "+INCLUDE_DIR+" "+SOURCE+" "+LIBRARIES
