@@ -4,7 +4,7 @@ from T3DClasses import *
 # initial Application conditions
 
 # create and setup Window display
-WINDOW_WIDTH, WINDOW_HEIGHT = 1500, 900
+WINDOW_WIDTH, WINDOW_HEIGHT = 1800, 900
 
 win = GraphWin("Simple Breakout", WINDOW_WIDTH, WINDOW_HEIGHT)
 
@@ -79,7 +79,21 @@ while True:
 			print("This is the tutorial")
 			currentGame.openTutorial()
 		else:
-			print("else")
+			for i in range(4):
+				if currentGame.gameBoard.layerPositions[i].layerButton.isClicked(clickPoint):
+					if currentGame.gameBoard.addMarker( i, clickPoint, 2-currentGame.playerTurn%2):
+						if currentGame.nextTurn():
+							if currentGame.displayOutcome():
+								mainMenu.startGameButton.state = False
+								currentGame.hide()
+								mainMenu.display()
+							else:
+								mainMenu.startGameButton.state = False
+								currentGame.hide()
+								currentGame = game(WINDOW_WIDTH, WINDOW_HEIGHT, win)
+								mainMenu.startGameButton.state = True
+								currentGame.display()
+					break
 			
 		#Check for button clicks in game board
 		if True:
