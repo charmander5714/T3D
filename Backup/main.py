@@ -1,13 +1,11 @@
 from graphics import *
 from T3DClasses import *
 
-# initial Application conditions
-
 # create and setup Window display
-WINDOW_WIDTH, WINDOW_HEIGHT = 1800, 900
+WINDOW_WIDTH, WINDOW_HEIGHT = 1500, 1000
 
 win = GraphWin("Simple Breakout", WINDOW_WIDTH, WINDOW_HEIGHT)
-
+win.setBackground("#476b6b")
 # create menu
 mainMenu = menu(WINDOW_WIDTH, WINDOW_HEIGHT, win)
 mainMenu.display()
@@ -42,7 +40,6 @@ while True:
 
 
 	elif mainMenu.startGameButton.state == True: # Game is in play
-		
 		# check for button clicks in game menu
 		if currentGame.forfeitButton.isClicked(clickPoint):
 			if currentGame.confirmForfeit() == True: # the pop up is confirmed
@@ -80,27 +77,23 @@ while True:
 			currentGame.openTutorial()
 		else:
 			for i in range(4):
-				if currentGame.gameBoard.layerPositions[i].layerButton.isClicked(clickPoint):
-					if currentGame.gameBoard.addMarker( i, clickPoint, 2-currentGame.playerTurn%2):
-						if currentGame.nextTurn():
-							if currentGame.displayOutcome():
-								mainMenu.startGameButton.state = False
-								currentGame.hide()
-								mainMenu.display()
-							else:
-								mainMenu.startGameButton.state = False
-								currentGame.hide()
-								currentGame = game(WINDOW_WIDTH, WINDOW_HEIGHT, win)
-								mainMenu.startGameButton.state = True
-								currentGame.display()
-					break
-			
-		#Check for button clicks in game board
-		if True:
-			pass
-		else:
-			pass
-
+				if currentGame.boardView:
+					if currentGame.gameBoard.layerPositions[i].layerButton.isClicked(clickPoint):
+						if currentGame.gameBoard.addMarker( i, clickPoint, 2-currentGame.playerTurn%2):
+							if currentGame.nextTurn():
+								if currentGame.displayOutcome():
+									mainMenu.startGameButton.state = False
+									currentGame.hide()
+									mainMenu.display()
+								else:
+									mainMenu.startGameButton.state = False
+									currentGame.hide()
+									currentGame = game(WINDOW_WIDTH, WINDOW_HEIGHT, win)
+									mainMenu.startGameButton.state = True
+									currentGame.display()
+						break
+				else:
+					pass
 
 win.close()
 
