@@ -79,8 +79,9 @@ while True:
 			for i in range(4):
 				if currentGame.boardView:
 					if currentGame.gameBoard.layerPositions[i].layerButton.isClicked(clickPoint):
-						if currentGame.gameBoard.addMarker( i, clickPoint, 2-currentGame.playerTurn%2):
-							if currentGame.nextTurn():
+						key, position=currentGame.gameBoard.addMarker( i, clickPoint, 2-currentGame.playerTurn%2)
+						if key:
+							if currentGame.nextTurn(position):
 								if currentGame.displayOutcome():
 									mainMenu.startGameButton.state = False
 									currentGame.hide()
