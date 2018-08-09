@@ -134,6 +134,3 @@ def checkWin(board, startPosition): # 0 means no win met, 1 means player 1 wins,
 			return True
 	
 	return(false)
-
-gameboard = [[[0,0,0,0], [0,1,0,0], [0,0,1,0], [0,0,0,1]], [[0,0,0,0], [0,0,0,0], [0,0,0,0], [0,0,0,0]], [[0,0,0,0], [0,0,0,0], [0,0,0,0], [0,0,0,0]], [[0,0,0,0], [0,0,0,0], [0,0,0,0], [0,0,0,0]]] 
-print(checkWin(gameboard, 0))
