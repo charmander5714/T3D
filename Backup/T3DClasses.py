@@ -1,5 +1,6 @@
 # T3D classes
 from graphics import *
+import math
 
 def inside(point, rectangle):
 	""" Is point inside rectangle? """
@@ -150,11 +151,11 @@ class game():
 
 	def toggle(self):
 		if self.boardView:
-			self.gameBoard.hide3DBoard()
 			self.clockwiseButton.hide()
 			self.clockwiseImage.undraw()
 			self.counterClockwiseButton.hide()
 			self.counterClockwiseImage.undraw()
+			self.gameBoard.hide3DBoard()
 			self.gameBoard.display2DBoard()
 			self.toggleBoardViewButton.updateText("2D View")
 		else:
@@ -166,8 +167,8 @@ class game():
 			self.counterClockwiseButton.display()
 			self.counterClockwiseImage.draw(self.win)
 	
-	def nextTurn(self):
-		if self.winCondition():
+	def nextTurn(self, playerPosition):
+		if self.winCondition(playerPosition):
 			self.gameResult=2-self.playerTurn%2
 			return True
 		elif self.playerTurn>63:
@@ -175,9 +176,6 @@ class game():
 		self.playerTurn = self.playerTurn+1
 		self.playerText.updateText(2-self.playerTurn%2)
 		return False
-
-	def winCondition(self):
-		pass
 
 	def display(self):
 		self.toggleBoardViewButton.display()
@@ -343,8 +341,139 @@ class game():
 	def getBoardPosition(self, Layer, row, col):
 		pass
 
-	def checkWinCondition(self):
-		pass
+	def winCondition(self, startPosition):
+		player = self.gameBoard.intBoard[startPosition];
+		layerNumber=0
+		rowNumber=0
+		columnNumber=0
+
+		# UP and DOWN
+		for layerNumber in range(0, 4):
+			if self.gameBoard.intBoard[startPosition%16+16*layerNumber] != player:
+				break
+			else:
+				layerNumber=layerNumber+1;   	
+		if layerNumber == 4:
+			return True
+		
+		# LEFT and RIGHT
+		for columnNumber in range(0, 4):
+			if self.gameBoard.intBoard[startPosition - startPosition%4 + columnNumber] != player:
+				break
+			else:
+				columnNumber=columnNumber+1
+		if columnNumber == 4:
+			return True
+		
+		# FORWARD and BACKWARD
+		for rowNumber in range(0, 4):
+			if self.gameBoard.intBoard[startPosition%4 + 4*rowNumber + startPosition - startPosition%16] != player:
+				break
+			else:
+				rowNumber=rowNumber+1
+		if rowNumber == 4:
+			return True
+		
+		# Same-layer diagonal checks
+		if (startPosition%16)%5 == 0:	# Top Left to Bottom Right Same layer
+			for rowNumber in range(0, 4):
+				if self.gameBoard.intBoard[startPosition - startPosition%16 + 5*rowNumber] != player:
+					break
+				else:
+					rowNumber=rowNumber+1
+		if rowNumber == 4:
+			return True	
+		
+		elif ((startPosition%16)%3 == 0 and (startPosition+1)%16) > 1: # Bottom Left to Top Right Same Layer
+			for rowNumber in range(0, 4):
+				if self.gameBoard.intBoard[startPosition - startPosition%16 + 3*rowNumber+3] != player:
+					break
+				else:
+					rowNumber=rowNumber+1
+		if rowNumber == 4:
+			return True
+				
+		# Top layer Left Column to Bottom Layer Right Column
+		if (startPosition%16 - int(math.floor(startPosition / 16)))%4 == 0:
+			for rowNumber in range(0, 4):
+				if self.gameBoard.intBoard[startPosition%17 + 17*rowNumber] != player:
+					break
+				else:
+					rowNumber=rowNumber+1
+		if rowNumber == 4:
+			returnTrue
+			
+		# Top layer Right Column to Bottom Layer Left Column
+		elif (startPosition%16 + int(math.floor(startPosition / 16)))%4 == 3:
+			for rowNumber in range(0, 4):
+				if self.gameBoard.intBoard[startPosition%15 + 15*rowNumber] != player:
+					break
+				else:
+					rowNumber=rowNumber+1
+		if rowNumber == 4:
+			return True
+			
+		# Top layer Back Row to Bottom Layer Front Row
+		if (startPosition%16-int(math.floor(startPosition/16)) * 4) < 4:
+			for rowNumber in range(0,4):
+				if self.gameBoard.intBoard[startPosition%20 + 20*rowNumber] != player:
+					break
+				else:
+					rowNumber=rowNumber+1
+		if rowNumber == 4:
+			return True
+			
+		# Top layer Front Row to Bottom Layer Back Row
+		elif (startPosition%16 + int(math.floor(startPosition / 16)) * 4)%16 > 11:
+			for rowNumber in range(0, 4):
+				if self.gameBoard.intBoard[startPosition%12 + 12*rowNumber] != player:
+					break
+				else:
+					rowNumber=rowNumber+1
+		if rowNumber == 4:
+			return True
+			
+		# 0 to 63
+		if((startPosition%16 - int(math.floor(startPosition / 16)) * 5) ==0):
+			for rowNumber in range(0, 4):
+				if self.gameBoard.intBoard[0 + 21*rowNumber] != player:
+					break
+				else:
+					rowNumber=rowNumber+1
+		if rowNumber == 4:
+			return True
+
+		#3 to 60
+		elif((startPosition%16 - int(math.floor(startPosition / 16)) * 3) == 3):
+			for rowNumber in range(0, 4):
+				if self.gameBoard.intBoard[3 + 19*rowNumber] != player:
+					break
+				else:
+					rowNumber=rowNumber+1
+		if rowNumber == 4:
+			return True
+						
+		#12 to 51
+		elif (startPosition%16 + int(math.floor(startPosition/ 16 ))*  3) == 12:
+			for rowNumber in range(0, 4):
+				if self.gameBoard.intBoard[12 + 13*rowNumber] != player:
+					break
+				else:
+					rowNumber=rowNumber+1
+		if rowNumber == 4:
+			return True
+						
+		#15 to 48
+		elif((startPosition%16 + int(math.floor(startPosition / 16)) * 5) == 15):
+			for rowNumber in range(0, 4):
+				if self.gameBoard.intBoard[15 + 11*rowNumber] != player:
+					break
+				else:
+					rowNumber=rowNumber+1
+		if rowNumber == 4:
+			return True
+		
+		return False
 
 	# Includes methods to return to main menu without forfeiting
 	def goToMainMenu(self):
@@ -413,6 +542,7 @@ class board():
 		self.W=W
 		self.H=H
 		self.win=win
+		self.intBoard = [0 for x in range(64)]
 		self.layerPositions = [layer('#ff1ab3', 0, self.W, self.H, self.win), layer('#ff8000', 1, self.W, self.H, self.win), layer('#b3b300', 2, self.W, self.H, self.win), layer('#39ac73', 3, self.W, self.H, self.win)]
 		pass
 
@@ -429,13 +559,25 @@ class board():
 		self.layerPositions[3].hide2DLayer()	
 
 	def display3DBoard(self):
-		pass
+		self.layerPositions[0].display3DLayer()
+		self.layerPositions[1].display3DLayer()
+		self.layerPositions[2].display3DLayer()
+		self.layerPositions[3].display3DLayer()
+
+	def hide3DBoard(self):
+		self.layerPositions[0].hide3DLayer()
+		self.layerPositions[1].hide3DLayer()
+		self.layerPositions[2].hide3DLayer()
+		self.layerPositions[3].hide3DLayer()
 
 	def hide3DBoard(self):
 		pass
 		
 	def addMarker(self, layerNumber, click, player):
-		return self.layerPositions[layerNumber].addMarker(click, player)
+		key, location=self.layerPositions[layerNumber].addMarker(click, player)
+		if key:
+			self.intBoard[location]=player
+		return key, location
 
 	def readMarker(self, layerNumber, row, col):
 		return self.layerPositions[layerNumber].readMarker(row, col)
@@ -449,19 +591,29 @@ class layer():
 		self.win=win
 		if self.W/6 < self.H/2:
 			self.size = self.W/6
+			self.size3D = self.W/9
 		else:
 			self.size = self.H/2
+			self.size3D = self.H/3
 		self.centerX = (1.5*self.layerNumber+0.75)*(self.W/6)
+		self.centerX3D=9*self.W/16
 		self.centerY = self.W/4
+		self.centerY3D = (self.layerNumber+1.3)*(self.H/6)
 		self.createLayer()
 		self.markerPosition = [[marker(0, Point(0,0), 0, self.win) for x in range(4)] for y in range(4)] 
 		pass
 
 	def createLayer(self):
 		self.grid()
-		self.text= Text(Point(self.centerX,self.centerY+self.size/2+20),"Layer "+str(self.layerNumber))
+		self.grid3D()
+		self.text= Text(Point(self.centerX,self.centerY+self.size/2+20),"Layer "+str(self.layerNumber+1))
+		self.text3D= Text(Point(self.centerX3D-self.size-20,self.centerY3D),"Layer "+str(self.layerNumber+1))
 		self.text.setSize(30)
 		self.text.setFill(self.layerColor)
+		self.text.setStyle("bold")
+		self.text3D.setSize(30)
+		self.text3D.setFill(self.layerColor)
+		self.text3D.setStyle("bold")
 
 	def grid(self):
 		self.v1Line = Line(Point(self.centerX-self.size/2,self.centerY-self.size/4), Point(self.centerX+self.size/2,self.centerY-self.size/4))
@@ -524,16 +676,49 @@ class layer():
 				if self.markerPosition[x][y].val!=0:
 					self.markerPosition[x][y].hide()
 		
+
+	def grid3D(self):
+		self.x1Line3d = Line(Point(self.centerX3D-3*self.size3D/4,self.centerY3D-self.size3D/4), Point(self.centerX3D+self.size3D/4,self.centerY3D-self.size3D/4))
+		self.y1Line3d = Line(Point(self.centerX3D-3*self.size3D/4,self.centerY3D-self.size3D/2), Point(self.centerX3D+self.size3D/4,self.centerY3D+self.size3D/2))
+		self.x1Line3d.setFill(self.layerColor)
+		self.y1Line3d.setFill(self.layerColor)
+		self.x2Line3d = Line(Point(self.centerX3D-self.size3D/2,self.centerY3D), Point(self.centerX3D+self.size3D/2,self.centerY3D))
+		self.y2Line3d = Line(Point(self.centerX3D-2*self.size3D/4,self.centerY3D-self.size3D/2), Point(self.centerX3D+2*self.size3D/4,self.centerY3D+self.size3D/2))
+		self.x2Line3d.setFill(self.layerColor)
+		self.y2Line3d.setFill(self.layerColor)
+		self.x3Line3d = Line(Point(self.centerX3D-self.size3D/4,self.centerY3D+self.size3D/4), Point(self.centerX3D+3*self.size3D/4,self.centerY3D+self.size3D/4))
+		self.y3Line3d = Line(Point(self.centerX3D-self.size3D/4,self.centerY3D-self.size3D/2), Point(self.centerX3D+3*self.size3D/4,self.centerY3D+self.size3D/2))
+		self.x3Line3d.setFill(self.layerColor)
+		self.y3Line3d.setFill(self.layerColor)
+
+	def display3DLayer(self):
+		self.y1Line3d.draw(self.win)
+		self.x1Line3d.draw(self.win)
+		self.y2Line3d.draw(self.win)
+		self.x2Line3d.draw(self.win)
+		self.y3Line3d.draw(self.win)
+		self.x3Line3d.draw(self.win)
+		self.text3D.draw(self.win)
+	
+	def hide3DLayer(self):
+		self.y1Line3d.undraw()
+		self.x1Line3d.undraw()
+		self.y2Line3d.undraw()
+		self.x2Line3d.undraw()
+		self.y3Line3d.undraw()
+		self.x3Line3d.undraw()
+		self.text3D.undraw()
+		
 	def addMarker(self, click, player):
 		for y in range(4):
 			for x in range(4):
 				if self.buttons[x][y].isClicked(click):
 					if self.markerPosition[x][y].val!=0:
-						return False
+						return False, 17
 					else:
 						self.markerPosition[x][y]=marker(player,Point(self.centerX-self.size/2+self.size/4*(x+0.5), self.centerY-self.size/2+self.size/4*(y+0.5)),self.size/8-5,self.win)
 						self.markerPosition[x][y].display()
-						return True
+						return True, x+4*y+16*self.layerNumber
 
 	def readMarker(self, row, col):
 		return self.layerPositions[layerNumber].readMarker(row, col)
