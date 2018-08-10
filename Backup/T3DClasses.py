@@ -141,7 +141,9 @@ class game():
 		
 		self.forfeitButton = button(False, "#b3cccc", "Forfeit Game", 		self.W-3*sizeX/2 , self.H-3*sizeY/2 , self.W-sizeX/2 , self.H-sizeY/2 , self.win)
 		self.forfeitButton.updateTextSize(26)
-		self.helpButton = button(False, "#b3cccc", "?", self.W-50 , 10 , self.W-10 , 50 , self.win)
+		self.helpButton = button(False, "#ffe5cc", "?", self.W-50 , 10 , self.W-10 , 50 , self.win)
+		self.helpButton.text.setStyle("bold")
+		self.helpButton.updateTextSize(26)
 		self.gameBoard=board(self.W, self.H, self.win)
 		self.playerText = textObject("red","", self.W/2, self.H/10, self.win)
 		self.clockwiseButton = button(False, "#87ab97", "", self.W/5-65 , self.H/2-65 , self.W/5+65 , self.H/2+65 , self.win)
@@ -537,6 +539,10 @@ class game():
 			else:
 				print("else")
 
+	def addMarker(self, layerNumber, click, player):
+		key, location=self.gameBoard.addMarker(layerNumber, click, player, self.gameBoard)
+		return key, location
+		
 class board():
 	def __init__(self, W, H, win):
 		self.W=W
@@ -569,12 +575,9 @@ class board():
 		self.layerPositions[1].hide3DLayer()
 		self.layerPositions[2].hide3DLayer()
 		self.layerPositions[3].hide3DLayer()
-
-	def hide3DBoard(self):
-		pass
 		
-	def addMarker(self, layerNumber, click, player):
-		key, location=self.layerPositions[layerNumber].addMarker(click, player)
+	def addMarker(self, layerNumber, click, player, view):
+		key, location=self.layerPositions[layerNumber].addMarker(click, player, view)
 		if key:
 			self.intBoard[location]=player
 		return key, location
@@ -600,7 +603,8 @@ class layer():
 		self.centerY = self.W/4
 		self.centerY3D = (self.layerNumber+1.3)*(self.H/6)
 		self.createLayer()
-		self.markerPosition = [[marker(0, Point(0,0), 0, self.win) for x in range(4)] for y in range(4)] 
+		self.markerPosition = [[marker(0, Point(0,0), 0, self.win) for x in range(4)] for y in range(4)]
+		self.markerPosition3D = [[marker(0, Point(0,0), 0, self.win) for x in range(4)] for y in range(4)] 
 		pass
 
 	def createLayer(self):
@@ -656,7 +660,6 @@ class layer():
 		self.text.draw(self.win)
 		for y in range(4):
 			for x in range(4):
-				self.buttons[x][y].hide()
 				if self.markerPosition[x][y].val!=0:
 					self.markerPosition[x][y].display()
 
@@ -690,8 +693,25 @@ class layer():
 		self.y3Line3d = Line(Point(self.centerX3D-self.size3D/4,self.centerY3D-self.size3D/2), Point(self.centerX3D+3*self.size3D/4,self.centerY3D+self.size3D/2))
 		self.x3Line3d.setFill(self.layerColor)
 		self.y3Line3d.setFill(self.layerColor)
-
+		if self.layerNumber==0:
+			self.layer3dButton=polyButton(False, "#ffe6f7", Point(self.centerX3D-4*self.size3D/4,self.centerY3D-2*self.size3D/4),Point(self.centerX3D+0*self.size3D/4,self.centerY3D-2*self.size3D/4),Point(self.centerX3D+4*self.size3D/4,self.centerY3D+2*self.size3D/4),Point(self.centerX3D-0*self.size3D/4,self.centerY3D+2*self.size3D/4), self.win)
+			self.buttons3D = [[polyButton(False, "#ffe6f7", Point(self.centerX3D-4*self.size3D/4+(x+0+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+0)*self.size3D/4),Point(self.centerX3D-4*self.size3D/4+(x+1+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+0)*self.size3D/4),Point(self.centerX3D-4*self.size3D/4+(x+2+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+1)*self.size3D/4),Point(self.centerX3D-4*self.size3D/4+(x+1+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+1)*self.size3D/4), self.win) for y in range(4)] for x in range(4)]
+		elif self.layerNumber==1:
+			self.layer3dButton=polyButton(False, "#ffe5cc", Point(self.centerX3D-4*self.size3D/4,self.centerY3D-2*self.size3D/4),Point(self.centerX3D+0*self.size3D/4,self.centerY3D-2*self.size3D/4),Point(self.centerX3D+4*self.size3D/4,self.centerY3D+2*self.size3D/4),Point(self.centerX3D-0*self.size3D/4,self.centerY3D+2*self.size3D/4), self.win)
+			self.buttons3D = [[polyButton(False, "#ffe5cc", Point(self.centerX3D-4*self.size3D/4+(x+0+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+0)*self.size3D/4),Point(self.centerX3D-4*self.size3D/4+(x+1+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+0)*self.size3D/4),Point(self.centerX3D-4*self.size3D/4+(x+2+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+1)*self.size3D/4),Point(self.centerX3D-4*self.size3D/4+(x+1+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+1)*self.size3D/4), self.win) for y in range(4)] for x in range(4)]
+		elif self.layerNumber==2:
+			self.layer3dButton=polyButton(False, "#ffffb3", Point(self.centerX3D-4*self.size3D/4,self.centerY3D-2*self.size3D/4),Point(self.centerX3D+0*self.size3D/4,self.centerY3D-2*self.size3D/4),Point(self.centerX3D+4*self.size3D/4,self.centerY3D+2*self.size3D/4),Point(self.centerX3D-0*self.size3D/4,self.centerY3D+2*self.size3D/4), self.win)
+			self.buttons3D = [[polyButton(False, "#ffffb3", Point(self.centerX3D-4*self.size3D/4+(x+0+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+0)*self.size3D/4),Point(self.centerX3D-4*self.size3D/4+(x+1+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+0)*self.size3D/4),Point(self.centerX3D-4*self.size3D/4+(x+2+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+1)*self.size3D/4),Point(self.centerX3D-4*self.size3D/4+(x+1+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+1)*self.size3D/4), self.win) for y in range(4)] for x in range(4)]
+		elif self.layerNumber==3:
+			self.layer3dButton=polyButton(False, "#c6ecd9", Point(self.centerX3D-4*self.size3D/4,self.centerY3D-2*self.size3D/4),Point(self.centerX3D+0*self.size3D/4,self.centerY3D-2*self.size3D/4),Point(self.centerX3D+4*self.size3D/4,self.centerY3D+2*self.size3D/4),Point(self.centerX3D-0*self.size3D/4,self.centerY3D+2*self.size3D/4), self.win)
+			self.buttons3D = [[polyButton(False, "#c6ecd9", Point(self.centerX3D-4*self.size3D/4+(x+0+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+0)*self.size3D/4),Point(self.centerX3D-4*self.size3D/4+(x+1+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+0)*self.size3D/4),Point(self.centerX3D-4*self.size3D/4+(x+2+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+1)*self.size3D/4),Point(self.centerX3D-4*self.size3D/4+(x+1+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+1)*self.size3D/4), self.win) for y in range(4)] for x in range(4)]
+		
 	def display3DLayer(self):
+		self.layer3dButton.display()
+		for x in range(4):
+			for y in range(4):
+				self.buttons3D[x][y].display()
+				pass
 		self.y1Line3d.draw(self.win)
 		self.x1Line3d.draw(self.win)
 		self.y2Line3d.draw(self.win)
@@ -699,8 +719,15 @@ class layer():
 		self.y3Line3d.draw(self.win)
 		self.x3Line3d.draw(self.win)
 		self.text3D.draw(self.win)
+		for y in range(4):
+			for x in range(4):
+				if self.markerPosition[x][y].val!=0:
+					self.markerPosition3D[x][y].display()
+
+
 	
 	def hide3DLayer(self):
+		self.layer3dButton.hide()
 		self.y1Line3d.undraw()
 		self.x1Line3d.undraw()
 		self.y2Line3d.undraw()
@@ -708,18 +735,44 @@ class layer():
 		self.y3Line3d.undraw()
 		self.x3Line3d.undraw()
 		self.text3D.undraw()
-		
-	def addMarker(self, click, player):
 		for y in range(4):
 			for x in range(4):
-				if self.buttons[x][y].isClicked(click):
-					if self.markerPosition[x][y].val!=0:
-						return False, 17
-					else:
-						self.markerPosition[x][y]=marker(player,Point(self.centerX-self.size/2+self.size/4*(x+0.5), self.centerY-self.size/2+self.size/4*(y+0.5)),self.size/8-5,self.win)
-						self.markerPosition[x][y].display()
-						return True, x+4*y+16*self.layerNumber
-
+				self.buttons3D[x][y].hide()
+				if self.markerPosition[x][y].val!=0:
+					self.markerPosition3D[x][y].hide()
+		
+	def addMarker(self, click, player, view):
+		if view:
+			for y in range(4):
+				for x in range(4):
+					if self.buttons[x][y].isClicked(click):
+						if self.markerPosition[x][y].val!=0:
+							return False, 17
+						else:
+							self.markerPosition[x][y]=marker(player,Point(self.centerX-self.size/2+self.size/4*(x+0.5), self.centerY-self.size/2+self.size/4*(y+0.5)),self.size/8-5,self.win)
+							self.markerPosition[x][y].display()
+							if player == 1:
+								self.buttons3D[x][y].changeColor("red")	
+							else:
+								self.buttons3D[x][y].changeColor("blue")
+							return True, x+4*y+16*self.layerNumber
+		else:
+			for y in range(4):
+				for x in range(4):
+					if self.buttons3D[x][y].isClicked(click):
+						if self.markerPosition[x][y].val!=0:
+							return False, 17
+						else:
+							self.markerPosition[x][y]=marker(player,Point(self.centerX-self.size/2+self.size/4*(x+0.5), self.centerY-self.size/2+self.size/4*(y+0.5)),self.size/8-5,self.win)
+							if player == 1:
+								self.buttons3D[x][y].changeColor("red")					
+								self.box.undraw()
+								self.box.draw(self.win)
+							else:
+								self.buttons3D[x][y].changeColor("blue")			
+								self.box.undraw()
+								self.box.draw(self.win)
+							return True, x+4*y+16*self.layerNumber
 	def readMarker(self, row, col):
 		return self.layerPositions[layerNumber].readMarker(row, col)
 
@@ -791,6 +844,31 @@ class button():
 		ul = self.box.getP1()  # assume p1 is upper left
 		lr = self.box.getP2()  # assume p2 is lower right 
 		return ul.getX() < point.getX() < lr.getX() and ul.getY() < point.getY() < lr.getY()
+
+class polyButton():
+	def __init__(self, initState, color, p1,p2,p3,p4, win):
+		self.state = initState
+		self.color = color
+		self.p1 = p1
+		self.p2 = p2
+		self.p3 = p3
+		self.p4 = p4
+		self.win = win
+		self.box = Polygon(p1,p2,p3,p4)
+		self.box.setFill(self.color)
+		
+	def display(self):
+		self.box.draw(self.win)
+
+	def hide(self):
+		self.box.undraw()
+
+	def changeColor(self,color):
+		self.box.setFill(color)
+		self.color=color
+	
+	def isClicked(self, point):
+		return self.p1.getY() < point.getY() < self.p4.getY() and (self.p1.getX()-self.p1.getY()) < (point.getX()-point.getY()) < (self.p2.getX()-self.p2.getY())		
 
 class textObject():
 	def __init__(self, color, text, x, y, win):
