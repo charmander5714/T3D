@@ -76,10 +76,10 @@ while True:
 			print("This is the tutorial")
 			currentGame.openTutorial()
 		else:
-			for i in range(4):
-				if currentGame.boardView:
+			if currentGame.boardView:
+				for i in range(4):
 					if currentGame.gameBoard.layerPositions[i].layerButton.isClicked(clickPoint):
-						key, position=currentGame.gameBoard.addMarker( i, clickPoint, 2-currentGame.playerTurn%2)
+						key, position=currentGame.addMarker( i, clickPoint, 2-currentGame.playerTurn%2)
 						if key:
 							if currentGame.nextTurn(position):
 								if currentGame.displayOutcome():
@@ -93,8 +93,23 @@ while True:
 									mainMenu.startGameButton.state = True
 									currentGame.display()
 						break
-				else:
-					pass
-
+			else:
+				for i in range(4):
+					if currentGame.gameBoard.layerPositions[i].layer3dButton.isClicked(clickPoint):
+						key, position=currentGame.addMarker( i, clickPoint, 2-currentGame.playerTurn%2)
+						if key:
+							if currentGame.nextTurn(position):
+								if currentGame.displayOutcome():
+									mainMenu.startGameButton.state = False
+									currentGame.hide()
+									mainMenu.display()
+								else:
+									mainMenu.startGameButton.state = False
+									currentGame.hide()
+									currentGame = game(WINDOW_WIDTH, WINDOW_HEIGHT, win)
+									mainMenu.startGameButton.state = True
+									currentGame.display()
+						break
+					
 win.close()
 
