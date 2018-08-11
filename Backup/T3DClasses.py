@@ -57,7 +57,7 @@ class menu():
 		
 		# draw and display a tutorial
 		creditsWindow = button(False, "#bfbfbf", "Programmed by:\nChris Scianna | Joshua Bricknell | Charlotte McHugh | Erik Gentile\n\nSpecial thanks to:\nProfessor Suresh and Northeastern University",1*sizeX/3,1*sizeY/3,5*sizeX/3,5*sizeY/3, self.win)
-		creditsWindow.updateTextSize(24)
+		creditsWindow.updateTextSize(16)
 		creditsWindow.display()
 		#create a close tutorial button and display it
 		closeButton = button(False, "#d9d9d9", "Close", 1*sizeX/3+5,1*sizeY/3+5,1*sizeX/3+80,1*sizeY/3+40, self.win)
@@ -83,13 +83,13 @@ class menu():
 		sizeY=self.H/2
 		
 		# draw and display a tutorial
-		tutorialWindow = button(False, "white", "",1*sizeX/3,1*sizeY/3,5*sizeX/3,5*sizeY/3, self.win)
+		tutorialWindow = button(False, "#cfcdcd", "",1*sizeX/3,1*sizeY/3,5*sizeX/3,5*sizeY/3, self.win)
 		tutorialWindow.updateTextSize(36)
 		tutorialWindow.display()
 		myImage = Image(Point(sizeX,sizeY), 'tutorial.png')
 		myImage.draw(self.win)
 		#create a close tutorial button and display it
-		closeButton = button(False, "#d9d9d9", "Close", 	1*sizeX/3+5,1*sizeY/3+5,1*sizeX/3+80,1*sizeY/3+40, self.win)
+		closeButton = button(False, "#b4b1b1", "Close", 	self.W-sizeX/3-80,1*sizeY/3+5,self.W-sizeX/3-5,1*sizeY/3+40, self.win)
 		closeButton.display()
 
 		# wait for the close tutorial button to close
@@ -123,7 +123,7 @@ class game():
 		self.boardViewButton = False
 		self.confirmButton = False
 		self.cancelButton = False
-		self.angle = 0
+		self.angle = 0 # ranges from 0-3
 
 		self.win = win
 		self.W = W
@@ -136,7 +136,7 @@ class game():
 		sizeY=self.H/10
 		self.returnToMenuButton = button(False, "#b3cccc", "Main Menu", sizeX/2 , self.H-3*sizeY/2 , 3*sizeX/2 , self.H-sizeY/2 , self.win)
 		self.returnToMenuButton.updateTextSize(26)
-		self.toggleBoardViewButton = button(False, "#b3cccc", "2D View", 	self.W/2-sizeX/2 , self.H-4*sizeY/2 , self.W/2+sizeX/2 , self.H-sizeY/2 , self.win)
+		self.toggleBoardViewButton = button(False, "#b3cccc", "3D View", 	self.W/2-sizeX/2 , self.H-3*sizeY/2 , self.W/2+sizeX/2 , self.H-sizeY/2 , self.win)
 		self.toggleBoardViewButton.updateTextSize(30)
 		
 		self.forfeitButton = button(False, "#b3cccc", "Forfeit Game", 		self.W-3*sizeX/2 , self.H-3*sizeY/2 , self.W-sizeX/2 , self.H-sizeY/2 , self.win)
@@ -159,11 +159,11 @@ class game():
 			self.counterClockwiseImage.undraw()
 			self.gameBoard.hide3DBoard()
 			self.gameBoard.display2DBoard()
-			self.toggleBoardViewButton.updateText("2D View")
+			self.toggleBoardViewButton.updateText("3D View")
 		else:
 			self.gameBoard.hide2DBoard()
 			self.gameBoard.display3DBoard()
-			self.toggleBoardViewButton.updateText("3D View")
+			self.toggleBoardViewButton.updateText("2D View")
 			self.clockwiseButton.display()
 			self.clockwiseImage.draw(self.win)
 			self.counterClockwiseButton.display()
@@ -183,12 +183,12 @@ class game():
 		self.toggleBoardViewButton.display()
 		if self.boardView:
 			self.gameBoard.display2DBoard()
-			self.toggleBoardViewButton.updateText("2D View")
+			self.toggleBoardViewButton.updateText("3D View")
 		else:
 			self.gameBoard.display3DBoard()
-			self.toggleBoardViewButton.updateText("3D View")
-			counterClockwiseButton.display()
-			counterClockwiseImage.draw(self.win)
+			self.toggleBoardViewButton.updateText("2D View")
+			self.counterClockwiseButton.display()
+			self.counterClockwiseImage.draw(self.win)
 		self.returnToMenuButton.display()
 		self.forfeitButton.display()
 		self.helpButton.display()
@@ -219,6 +219,17 @@ class game():
 	def getPlayerTurn(self):
 		pass
 
+	def isRotate(self, point):
+		# if rotate cw
+		if self.clockwiseButton.isClicked(point):
+			self.angle = (self.angle + 1)%4
+			pass
+		if self.counterClockwiseButton.isClicked(point):
+			self.angle = (self.angle - 1)%4
+		# if rotate ccw
+		# print(self.angle)
+		pass
+
 	def setPlayerTurn(self, playerTurn):
 		self.playerTurn = playerTurn
 
@@ -237,12 +248,12 @@ class game():
 		sizeY=self.H/2
 		
 		# draw and display a tutorial
-		tutorialWindow = button(False, "white", "",1*sizeX/3,1*sizeY/3,5*sizeX/3,5*sizeY/3, self.win)
+		tutorialWindow = button(False, "#cfcdcd", "",1*sizeX/3,1*sizeY/3,5*sizeX/3,5*sizeY/3, self.win)
 		tutorialWindow.display()
 		#create a close tutorial button and display it
 		myImage = Image(Point(sizeX,sizeY), 'tutorial.png')
 		myImage.draw(self.win)
-		closeButton = button(False, "#d9d9d9", "Close", 	1*sizeX/3+5,1*sizeY/3+5,1*sizeX/3+80,1*sizeY/3+40, self.win)
+		closeButton = button(False, "#b4b1b1", "Close", 	1*sizeX/3+5,1*sizeY/3+5,1*sizeX/3+80,1*sizeY/3+40, self.win)
 		closeButton.display()
 
 		# wait for the close tutorial button to close
@@ -272,11 +283,11 @@ class game():
 
 		#create a close tutorial button and display it
 		confirmExitButton = button(False, "#d9d9d9", "Confirm Exit", 	5*sizeX/3-2*sizeX/4,  5*sizeY/3 - sizeY/5 - 20, 5*sizeX/3-sizeX/8 ,  5*sizeY/3 - 20, self.win)
-		confirmExitButton.updateTextSize(30)
+		confirmExitButton.updateTextSize(24)
 		confirmExitButton.display()
 
 		cancelExitButton = button(False, "#d9d9d9", "Cancel Exit", 	1*sizeX/3+sizeX/8,  5*sizeY/3 - sizeY/5 - 20,  1*sizeX/3+2*sizeX/4,  5*sizeY/3 - 20, self.win)
-		cancelExitButton.updateTextSize(30)
+		cancelExitButton.updateTextSize(24)
 		cancelExitButton.display()
 
 		# wait for the close tutorial button to close
@@ -311,11 +322,11 @@ class game():
 
 		#create a close tutorial button and display it
 		confirmForfeitButton = button(False, "#d9d9d9", "Confirm forfeit", 	5*sizeX/3-2*sizeX/4,  5*sizeY/3 - sizeY/5 - 20, 5*sizeX/3-sizeX/8 ,  5*sizeY/3 - 20, self.win)
-		confirmForfeitButton.updateTextSize(30)
+		confirmForfeitButton.updateTextSize(24)
 		confirmForfeitButton.display()
 
 		cancelForfeitButton = button(False, "#d9d9d9", "Cancel forfeit", 	1*sizeX/3+sizeX/8,  5*sizeY/3 - sizeY/5 - 20,  1*sizeX/3+2*sizeX/4,  5*sizeY/3 - 20, self.win)
-		cancelForfeitButton.updateTextSize(30)
+		cancelForfeitButton.updateTextSize(24)
 		cancelForfeitButton.display()
 
 		# wait for the close tutorial button to close
@@ -540,9 +551,12 @@ class game():
 				print("else")
 
 	def addMarker(self, layerNumber, click, player):
-		key, location=self.gameBoard.addMarker(layerNumber, click, player, self.gameBoard)
+		key, location=self.gameBoard.addMarker(layerNumber, click, player, self.boardView)
 		return key, location
-		
+	
+	def rotateBoard(self):
+		self.gameBoard.rotateBoard(self.angle)
+
 class board():
 	def __init__(self, W, H, win):
 		self.W=W
@@ -575,7 +589,13 @@ class board():
 		self.layerPositions[1].hide3DLayer()
 		self.layerPositions[2].hide3DLayer()
 		self.layerPositions[3].hide3DLayer()
-		
+
+	def rotateBoard(self, angle):
+		self.layerPositions[0].rotateBoard(angle)
+		self.layerPositions[1].rotateBoard(angle)
+		self.layerPositions[2].rotateBoard(angle)
+		self.layerPositions[3].rotateBoard(angle)
+
 	def addMarker(self, layerNumber, click, player, view):
 		key, location=self.layerPositions[layerNumber].addMarker(click, player, view)
 		if key:
@@ -604,7 +624,6 @@ class layer():
 		self.centerY3D = (self.layerNumber+1.3)*(self.H/6)
 		self.createLayer()
 		self.markerPosition = [[marker(0, Point(0,0), 0, self.win) for x in range(4)] for y in range(4)]
-		self.markerPosition3D = [[marker(0, Point(0,0), 0, self.win) for x in range(4)] for y in range(4)] 
 		pass
 
 	def createLayer(self):
@@ -645,7 +664,6 @@ class layer():
 			self.layerButton = button(False, "#c6ecd9", "", self.centerX-self.size/2, self.centerY-self.size/2, self.centerX+self.size/2, self.centerY+self.size/2, self.win)
 			self.buttons = [[button(False, "#c6ecd9", "", self.centerX-self.size/2+self.size/4*x, self.centerY-self.size/2+self.size/4*y, self.centerX-self.size/2+self.size/4*(x+1), self.centerY-self.size/2+self.size/4*(y+1), self.win) for y in range(4)] for x in range(4)]
 
-
 	def display2DLayer(self):
 		for x in range(4):
 			for y in range(4):
@@ -663,7 +681,6 @@ class layer():
 				if self.markerPosition[x][y].val!=0:
 					self.markerPosition[x][y].display()
 
-
 	def hide2DLayer(self):
 		self.v1Line.undraw()
 		self.x1Line.undraw()
@@ -678,7 +695,6 @@ class layer():
 				self.buttons[x][y].hide()
 				if self.markerPosition[x][y].val!=0:
 					self.markerPosition[x][y].hide()
-		
 
 	def grid3D(self):
 		self.x1Line3d = Line(Point(self.centerX3D-3*self.size3D/4,self.centerY3D-self.size3D/4), Point(self.centerX3D+self.size3D/4,self.centerY3D-self.size3D/4))
@@ -695,7 +711,7 @@ class layer():
 		self.y3Line3d.setFill(self.layerColor)
 		if self.layerNumber==0:
 			self.layer3dButton=polyButton(False, "#ffe6f7", Point(self.centerX3D-4*self.size3D/4,self.centerY3D-2*self.size3D/4),Point(self.centerX3D+0*self.size3D/4,self.centerY3D-2*self.size3D/4),Point(self.centerX3D+4*self.size3D/4,self.centerY3D+2*self.size3D/4),Point(self.centerX3D-0*self.size3D/4,self.centerY3D+2*self.size3D/4), self.win)
-			self.buttons3D = [[polyButton(False, "#ffe6f7", Point(self.centerX3D-4*self.size3D/4+(x+0+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+0)*self.size3D/4),Point(self.centerX3D-4*self.size3D/4+(x+1+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+0)*self.size3D/4),Point(self.centerX3D-4*self.size3D/4+(x+2+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+1)*self.size3D/4),Point(self.centerX3D-4*self.size3D/4+(x+1+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+1)*self.size3D/4), self.win) for y in range(4)] for x in range(4)]
+			self.buttons3D = [[polyButton(False, "#ffe6f7", Point(self.centerX3D-4*self.size3D/4+(x+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+0)*self.size3D/4),Point(self.centerX3D-4*self.size3D/4+(x+1+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+0)*self.size3D/4),Point(self.centerX3D-4*self.size3D/4+(x+2+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+1)*self.size3D/4),Point(self.centerX3D-4*self.size3D/4+(x+1+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+1)*self.size3D/4), self.win) for y in range(4)] for x in range(4)]
 		elif self.layerNumber==1:
 			self.layer3dButton=polyButton(False, "#ffe5cc", Point(self.centerX3D-4*self.size3D/4,self.centerY3D-2*self.size3D/4),Point(self.centerX3D+0*self.size3D/4,self.centerY3D-2*self.size3D/4),Point(self.centerX3D+4*self.size3D/4,self.centerY3D+2*self.size3D/4),Point(self.centerX3D-0*self.size3D/4,self.centerY3D+2*self.size3D/4), self.win)
 			self.buttons3D = [[polyButton(False, "#ffe5cc", Point(self.centerX3D-4*self.size3D/4+(x+0+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+0)*self.size3D/4),Point(self.centerX3D-4*self.size3D/4+(x+1+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+0)*self.size3D/4),Point(self.centerX3D-4*self.size3D/4+(x+2+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+1)*self.size3D/4),Point(self.centerX3D-4*self.size3D/4+(x+1+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+1)*self.size3D/4), self.win) for y in range(4)] for x in range(4)]
@@ -719,11 +735,6 @@ class layer():
 		self.y3Line3d.draw(self.win)
 		self.x3Line3d.draw(self.win)
 		self.text3D.draw(self.win)
-		for y in range(4):
-			for x in range(4):
-				if self.markerPosition[x][y].val!=0:
-					self.markerPosition3D[x][y].display()
-
 
 	
 	def hide3DLayer(self):
@@ -738,10 +749,33 @@ class layer():
 		for y in range(4):
 			for x in range(4):
 				self.buttons3D[x][y].hide()
-				if self.markerPosition[x][y].val!=0:
-					self.markerPosition3D[x][y].hide()
-		
+
+	def rotateBoard(self, angle):
+		self.hide3DLayer()
+		for x0 in range (4):
+			for y0 in range(4):
+				x=x0
+				y=y0
+				for w in range(0,angle):
+					z = x
+					x = y
+					y = 3 - z
+				if self.layerNumber==0:
+					self.buttons3D[x0][y0] = polyButton(False, "#ffe6f7", Point(self.centerX3D-4*self.size3D/4+(x+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+0)*self.size3D/4),Point(self.centerX3D-4*self.size3D/4+(x+1+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+0)*self.size3D/4),Point(self.centerX3D-4*self.size3D/4+(x+2+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+1)*self.size3D/4),Point(self.centerX3D-4*self.size3D/4+(x+1+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+1)*self.size3D/4), self.win)
+				elif self.layerNumber==1:
+					self.buttons3D[x0][y0] = polyButton(False, "#ffe5cc", Point(self.centerX3D-4*self.size3D/4+(x+0+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+0)*self.size3D/4),Point(self.centerX3D-4*self.size3D/4+(x+1+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+0)*self.size3D/4),Point(self.centerX3D-4*self.size3D/4+(x+2+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+1)*self.size3D/4),Point(self.centerX3D-4*self.size3D/4+(x+1+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+1)*self.size3D/4), self.win)
+				elif self.layerNumber==2:
+					self.buttons3D[x0][y0] = polyButton(False, "#ffffb3", Point(self.centerX3D-4*self.size3D/4+(x+0+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+0)*self.size3D/4),Point(self.centerX3D-4*self.size3D/4+(x+1+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+0)*self.size3D/4),Point(self.centerX3D-4*self.size3D/4+(x+2+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+1)*self.size3D/4),Point(self.centerX3D-4*self.size3D/4+(x+1+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+1)*self.size3D/4), self.win)
+				elif self.layerNumber==3:
+					self.buttons3D[x0][y0] = polyButton(False, "#c6ecd9", Point(self.centerX3D-4*self.size3D/4+(x+0+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+0)*self.size3D/4),Point(self.centerX3D-4*self.size3D/4+(x+1+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+0)*self.size3D/4),Point(self.centerX3D-4*self.size3D/4+(x+2+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+1)*self.size3D/4),Point(self.centerX3D-4*self.size3D/4+(x+1+y)*self.size3D/4,self.centerY3D-2*self.size3D/4+(y+1)*self.size3D/4), self.win)
+				if self.markerPosition[x0][y0].val==1:
+					self.buttons3D[x0][y0].box.setFill("red")
+				elif self.markerPosition[x0][y0].val==2:
+					self.buttons3D[x0][y0].box.setFill("blue")
+		self.display3DLayer()
+	
 	def addMarker(self, click, player, view):
+		print(view)
 		if view:
 			for y in range(4):
 				for x in range(4):
@@ -757,6 +791,7 @@ class layer():
 								self.buttons3D[x][y].changeColor("blue")
 							return True, x+4*y+16*self.layerNumber
 		else:
+
 			for y in range(4):
 				for x in range(4):
 					if self.buttons3D[x][y].isClicked(click):
@@ -766,13 +801,14 @@ class layer():
 							self.markerPosition[x][y]=marker(player,Point(self.centerX-self.size/2+self.size/4*(x+0.5), self.centerY-self.size/2+self.size/4*(y+0.5)),self.size/8-5,self.win)
 							if player == 1:
 								self.buttons3D[x][y].changeColor("red")					
-								self.box.undraw()
-								self.box.draw(self.win)
+								self.buttons3D[x][y].box.undraw()
+								self.buttons3D[x][y].box.draw(self.win)
 							else:
 								self.buttons3D[x][y].changeColor("blue")			
-								self.box.undraw()
-								self.box.draw(self.win)
+								self.buttons3D[x][y].box.undraw()
+								self.buttons3D[x][y].box.draw(self.win)
 							return True, x+4*y+16*self.layerNumber
+
 	def readMarker(self, row, col):
 		return self.layerPositions[layerNumber].readMarker(row, col)
 
@@ -805,7 +841,7 @@ class cross(marker):
 
 class naught(marker):
 	def __init__(self):
-		self.color = 'blue'
+		self.color = 'red'
 		pass
 	pass
 
