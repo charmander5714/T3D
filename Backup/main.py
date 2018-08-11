@@ -2,7 +2,7 @@ from graphics import *
 from T3DClasses import *
 
 # create and setup Window display
-WINDOW_WIDTH, WINDOW_HEIGHT = 1500, 1000
+WINDOW_WIDTH, WINDOW_HEIGHT = 1300, 900
 
 win = GraphWin("Simple Breakout", WINDOW_WIDTH, WINDOW_HEIGHT)
 win.setBackground("#476b6b")
@@ -94,22 +94,31 @@ while True:
 									currentGame.display()
 						break
 			else:
-				for i in range(4):
-					if currentGame.gameBoard.layerPositions[i].layer3dButton.isClicked(clickPoint):
-						key, position=currentGame.addMarker( i, clickPoint, 2-currentGame.playerTurn%2)
-						if key:
-							if currentGame.nextTurn(position):
-								if currentGame.displayOutcome():
-									mainMenu.startGameButton.state = False
-									currentGame.hide()
-									mainMenu.display()
-								else:
-									mainMenu.startGameButton.state = False
-									currentGame.hide()
-									currentGame = game(WINDOW_WIDTH, WINDOW_HEIGHT, win)
-									mainMenu.startGameButton.state = True
-									currentGame.display()
-						break
-					
+				if currentGame.clockwiseButton.isClicked(clickPoint):
+					currentGame.angle=(currentGame.angle-1)%4
+					currentGame.rotateBoard()
+					print (currentGame.angle)
+				elif currentGame.counterClockwiseButton.isClicked(clickPoint):
+					currentGame.angle=(currentGame.angle+1)%4
+					currentGame.rotateBoard()
+					print (currentGame.angle)
+				else:
+					for i in range(4):
+						if currentGame.gameBoard.layerPositions[i].layer3dButton.isClicked(clickPoint):
+							
+							key, position=currentGame.addMarker( i, clickPoint, 2-currentGame.playerTurn%2)
+							if key:
+								if currentGame.nextTurn(position):
+									if currentGame.displayOutcome():
+										mainMenu.startGameButton.state = False
+										currentGame.hide()
+										mainMenu.display()
+									else:
+										mainMenu.startGameButton.state = False
+										currentGame.hide()
+										currentGame = game(WINDOW_WIDTH, WINDOW_HEIGHT, win)
+										mainMenu.startGameButton.state = True
+										currentGame.display()
+							break
 win.close()
 
