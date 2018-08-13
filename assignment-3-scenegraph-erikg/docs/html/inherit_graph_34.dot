@@ -1,7 +1,0 @@
-digraph "Graphical Class Hierarchy"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node1 [label="glm::detail::_swizzle\l_base2\< ValueType, P,\l VecType, N, E0, E1, E2,\l E3, 1 \>::Stub",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structglm_1_1detail_1_1__swizzle__base2_3_01ValueType_00_01P_00_01VecType_00_01N_00_01E0_00_01E17d6926f6e6f474ef79d271c7c59bd480.html"];
-}

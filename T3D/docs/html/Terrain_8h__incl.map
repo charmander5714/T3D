@@ -1,7 +1,0 @@
-<map id="include/Terrain.h" name="include/Terrain.h">
-<area shape="rect" id="node2" href="$Texture_8h.html" title="Loads an image and creates an OpenGL texture on the GPU. " alt="" coords="100,80,180,107"/>
-<area shape="rect" id="node3" href="$Image_8h.html" title="Sets up an OpenGL camera. " alt="" coords="5,155,80,181"/>
-<area shape="rect" id="node10" href="$Shader_8h.html" title="Manages the loading, compiling, and linking of vertex and fragment shaders. " alt="" coords="209,80,287,107"/>
-<area shape="rect" id="node5" href="$glad_8h.html" title="glad/glad.h" alt="" coords="206,155,298,181"/>
-<area shape="rect" id="node7" href="$khrplatform_8h.html" title="KHR/khrplatform.h" alt="" coords="232,229,371,256"/>
-</map>

@@ -1,6 +1,0 @@
-<map id="include/Renderer.h" name="include/Renderer.h">
-<area shape="rect" id="node2" href="$Renderer_8cpp.html" title="src/Renderer.cpp" alt="" coords="5,80,133,107"/>
-<area shape="rect" id="node3" href="$SDLGraphicsProgram_8h.html" title="SDL Class used to setup input and setup of OpenGL. " alt="" coords="158,80,378,107"/>
-<area shape="rect" id="node4" href="$main_8cpp.html" title="src/main.cpp" alt="" coords="125,155,229,181"/>
-<area shape="rect" id="node5" href="$SDLGraphicsProgram_8cpp.html" title="src/SDLGraphicsProgram.cpp" alt="" coords="254,155,463,181"/>
-</map>

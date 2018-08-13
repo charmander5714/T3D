@@ -1,9 +1,0 @@
-<map id="include/Sphere.h" name="include/Sphere.h">
-<area shape="rect" id="node2" href="$Object_8h.html" title="Sets up an OpenGL camera. " alt="" coords="497,80,572,107"/>
-<area shape="rect" id="node13" href="$Geometry_8h.html" title="Organizes vertex and triangle information. " alt="" coords="816,155,912,181"/>
-<area shape="rect" id="node3" href="$glad_8h.html" title="glad/glad.h" alt="" coords="170,229,262,256"/>
-<area shape="rect" id="node9" href="$Buffer_8h.html" title="Sets up a variety of Vertex Buffer Object (VBO) layouts. " alt="" coords="195,155,266,181"/>
-<area shape="rect" id="node10" href="$Texture_8h.html" title="Loads an image and creates an OpenGL texture on the GPU. " alt="" coords="291,155,371,181"/>
-<area shape="rect" id="node5" href="$khrplatform_8h.html" title="KHR/khrplatform.h" alt="" coords="5,304,144,331"/>
-<area shape="rect" id="node11" href="$Image_8h.html" title="Sets up an OpenGL camera. " alt="" coords="293,229,368,256"/>
-</map>

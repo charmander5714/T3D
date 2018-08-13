@@ -1,6 +1,0 @@
-<map id="Sphere" name="Sphere">
-<area shape="rect" id="node2" href="$classObject.html" title="Object" alt="" coords="119,95,181,121"/>
-<area shape="rect" id="node3" href="$classGeometry.html" title="Geometry" alt="" coords="5,5,92,32"/>
-<area shape="rect" id="node4" href="$classTexture.html" title="Texture" alt="" coords="116,5,184,32"/>
-<area shape="rect" id="node5" href="$classBuffer.html" title="Buffer" alt="" coords="224,5,284,32"/>
-</map>
