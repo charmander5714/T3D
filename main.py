@@ -1,8 +1,18 @@
 from graphics import *
 from T3DClasses import *
 
+root = tk.Tk()
+
+screen_width = root.winfo_screenwidth()
+screen_height = root.winfo_screenheight()
+root.destroy()
+if (screen_width-100)/13 < (screen_height-100)/9:
+	WINDOW_WIDTH = (screen_width-100)
+	WINDOW_HEIGHT = WINDOW_WIDTH/13*9
+else:
+	WINDOW_HEIGHT = (screen_height-100)
+	WINDOW_WIDTH = WINDOW_HEIGHT/9*13
 # create and setup Window display
-WINDOW_WIDTH, WINDOW_HEIGHT = 1300, 900
 
 win = GraphWin("Simple Breakout", WINDOW_WIDTH, WINDOW_HEIGHT)
 win.setBackground("#476b6b")
@@ -25,16 +35,13 @@ while True:
 			currentGame = game(WINDOW_WIDTH, WINDOW_HEIGHT, win)
 			mainMenu.startGameButton.state = True
 			currentGame.display()
-			# print("Game Started")
 			
 			
 		elif mainMenu.tutorialButton.isClicked(clickPoint):
-			# print("This is the tutorial")
 			# Waits for the close tutorial button to close
 			mainMenu.openTutorial()
 
 		elif mainMenu.creditsButton.isClicked(clickPoint):
-			# print("this is the credits")
 			# waits for the close credits button to close
 			mainMenu.openCredits()
 
@@ -43,7 +50,6 @@ while True:
 		# check for button clicks in game menu
 		if currentGame.forfeitButton.isClicked(clickPoint):
 			if currentGame.confirmForfeit() == True: # the pop up is confirmed
-				print("Game Forfeited")
 				if currentGame.displayOutcome() == True: #main menu button pressed
 					mainMenu.startGameButton.state = False
 					currentGame.hide()
@@ -54,26 +60,16 @@ while True:
 					currentGame = game(WINDOW_WIDTH, WINDOW_HEIGHT, win)
 					mainMenu.startGameButton.state = True
 					currentGame.display()
-			else: # user clicked cancel exit
-				print("User has canceled a return to the main menu")
-				pass
 			
 		elif currentGame.toggleBoardViewButton.isClicked(clickPoint):
 			currentGame.boardView = not currentGame.boardView
 			currentGame.toggle()
-			print("toggle the board view 2D/3D")
-			
 		elif currentGame.returnToMenuButton.isClicked(clickPoint):
 			if currentGame.confirmExit() == True: # the pop up is confirmed
 				mainMenu.startGameButton.state = False
 				currentGame.hide()
 				mainMenu.display()
-				pass
-			else: # user clicked cancel exit
-				print("User has canceled a return to the main menu")
-				pass
 		elif currentGame.helpButton.isClicked(clickPoint):
-			print("This is the tutorial")
 			currentGame.openTutorial()
 		else:
 			if currentGame.boardView:
@@ -97,11 +93,9 @@ while True:
 				if currentGame.clockwiseButton.isClicked(clickPoint):
 					currentGame.angle=(currentGame.angle-1)%4
 					currentGame.rotateBoard()
-					print (currentGame.angle)
 				elif currentGame.counterClockwiseButton.isClicked(clickPoint):
 					currentGame.angle=(currentGame.angle+1)%4
 					currentGame.rotateBoard()
-					print (currentGame.angle)
 				else:
 					for i in range(4):
 						if currentGame.gameBoard.layerPositions[i].layer3dButton.isClicked(clickPoint):
