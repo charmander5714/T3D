@@ -207,9 +207,6 @@ class game():
 			pass
 		if self.counterClockwiseButton.isClicked(point):
 			self.angle = (self.angle - 1)%4
-		# if rotate ccw
-		# print(self.angle)
-		pass
 
 	def setPlayerTurn(self, playerTurn):
 		self.playerTurn = playerTurn
@@ -259,20 +256,15 @@ class game():
 			if clicker is None:  # so we can substitute checkMouse() for getMouse()
 				pass
 			elif confirmExitButton.isClicked(clicker):
-				print("confirm exit clicked")
 				confirmExitButton.hide()
 				confirmExitWindow.hide()
 				cancelExitButton.hide()
 				return True
-
 			elif cancelExitButton.isClicked(clicker):
-				print("Cancel exit clicked")
 				confirmExitButton.hide()
 				confirmExitWindow.hide()
 				cancelExitButton.hide()
 				return False
-			else:
-				print("else")
 
 	def confirmForfeit(self):
 		sizeX=self.W/2
@@ -298,7 +290,6 @@ class game():
 			if clicker is None:  # so we can substitute checkMouse() for getMouse()
 				pass
 			elif confirmForfeitButton.isClicked(clicker):
-				print("Confirm Forfeit clicked")
 				confirmForfeitButton.hide()
 				confirmForfeitWindow.hide()
 				cancelForfeitButton.hide()
@@ -306,20 +297,16 @@ class game():
 				return True
 
 			elif cancelForfeitButton.isClicked(clicker):
-				print("Cancel forfeit clicked")
 				confirmForfeitButton.hide()
 				confirmForfeitWindow.hide()
 				cancelForfeitButton.hide()
 				return False
-			else:
-				print("else")
 
 	def winCondition(self, startPosition):
 		player = self.gameBoard.intBoard[startPosition];
 		layerNumber=0
 		rowNumber=0
 		columnNumber=0
-		print (startPosition)
 		# UP and DOWN
 		for layerNumber in range(0, 4):
 			if self.gameBoard.intBoard[startPosition%16+16*layerNumber] != player:
@@ -491,20 +478,16 @@ class game():
 			if clicker is None:  # so we can substitute checkMouse() for getMouse()
 				pass
 			elif mainMenuExitButton.isClicked(clicker):
-				print("confirm forfeit clicked")
 				mainMenuExitButton.hide()
 				winnerWindow.hide()
 				playAgainButton.hide()
 				return True
 
 			elif playAgainButton.isClicked(clicker):
-				print("Cancel forfeit clicked")
 				mainMenuExitButton.hide()
 				winnerWindow.hide()
 				playAgainButton.hide()
 				return False
-			else:
-				print("else")
 
 	def addMarker(self, layerNumber, click, player):
 		key, location=self.gameBoard.addMarker(layerNumber, click, player, self.boardView)
@@ -749,7 +732,6 @@ class layer():
 		self.display3DLayer()
 	
 	def addMarker(self, click, player, view):
-		print(view)
 		if view:
 			for y in range(4):
 				for x in range(4):
@@ -765,7 +747,6 @@ class layer():
 								self.buttons3D[x][y].changeColor("blue")
 							return True, x+4*y+16*self.layerNumber
 		else:
-
 			for y in range(4):
 				for x in range(4):
 					if self.buttons3D[x][y].isClicked(click):
