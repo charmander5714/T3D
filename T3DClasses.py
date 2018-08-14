@@ -2,14 +2,13 @@
 from graphics import *
 import math
 
-def inside(point, rectangle):
-	""" Is point inside rectangle? """
-
-	ul = rectangle.getP1()  # assume p1 is upper left
-	lr = rectangle.getP2()  # assume p2 is lower right 
-
-	return ul.getX() < point.getX() < lr.getX() and ul.getY() < point.getY() < lr.getY()
-
+'''#########################################################
+Class name: menu
+Class purpose: store the logo, main menu buttons, and 
+               instance of game.
+Class dependencies: The Game class relies on the Menu class
+               to control the beginning of a new game. 
+#########################################################'''
 class menu():
 	def __init__(self, W, H, win):
 		self.win = win
@@ -55,15 +54,15 @@ class menu():
 		sizeX=self.W/2
 		sizeY=self.H/2
 		
-		# draw and display a tutorial
+		# draw and display a credit
 		creditsWindow = button(False, "#bfbfbf", "Programmed by:\nChris Scianna | Joshua Bricknell | Charlotte McHugh | Erik Gentile\n\nSpecial thanks to:\nProfessor Suresh and Northeastern University",1*sizeX/3,1*sizeY/3,5*sizeX/3,5*sizeY/3, self.win)
 		creditsWindow.updateTextSize(16)
 		creditsWindow.display()
-		#create a close tutorial button and display it
-		closeButton = button(False, "#d9d9d9", "Close", 1*sizeX/3+5,1*sizeY/3+5,1*sizeX/3+80,1*sizeY/3+40, self.win)
+		#create a close credit button and display it
+		closeButton = button(False, "#d9d9d9", "Close", 	self.W-sizeX/3-80,1*sizeY/3+5,self.W-sizeX/3-5,1*sizeY/3+40, self.win)
 		closeButton.display()
 
-		# wait for the close tutorial button to close
+		# wait for the close credit button to close
 		while True:
 			clicker = self.win.getMouse()
 			if clicker is None:  # so we can substitute checkMouse() for getMouse()
@@ -73,12 +72,7 @@ class menu():
 				closeButton.hide()
 				break
 
-	def closeCredits(self):
-		pass
-
-	
 	def openTutorial(self):
-
 		sizeX=self.W/2
 		sizeY=self.H/2
 		
@@ -103,15 +97,14 @@ class menu():
 				myImage.undraw()
 				break
 		# return to rest of main menu after exiting tutorial
-	def closeTutorial(self):
-		pass
 
-	def endGame(self):
-		pass
-
-	def displayOutcome(self):
-		pass
-
+'''#########################################################
+Class name: game
+Class purpose: store the board, game play buttons, and check
+               for win conditions.
+Class dependencies: The Game class relies on the Menu class
+               to control the beginning of a new game. 
+#########################################################'''
 class game():
 	def __init__(self, W, H, win):
 		self.gameStatus = True
@@ -124,7 +117,6 @@ class game():
 		self.confirmButton = False
 		self.cancelButton = False
 		self.angle = 0 # ranges from 0-3
-
 		self.win = win
 		self.W = W
 		self.H = H
@@ -138,7 +130,6 @@ class game():
 		self.returnToMenuButton.updateTextSize(26)
 		self.toggleBoardViewButton = button(False, "#b3cccc", "3D View", 	self.W/2-sizeX/2 , self.H-3*sizeY/2 , self.W/2+sizeX/2 , self.H-sizeY/2 , self.win)
 		self.toggleBoardViewButton.updateTextSize(30)
-		
 		self.forfeitButton = button(False, "#b3cccc", "Forfeit Game", 		self.W-3*sizeX/2 , self.H-3*sizeY/2 , self.W-sizeX/2 , self.H-sizeY/2 , self.win)
 		self.forfeitButton.updateTextSize(26)
 		self.helpButton = button(False, "#ffe5cc", "?", self.W-50 , 10 , self.W-10 , 50 , self.win)
@@ -194,7 +185,6 @@ class game():
 		self.helpButton.display()
 		self.playerText.updateText(2-self.playerTurn%2)
 
-			
 	def hide(self):
 		self.toggleBoardViewButton.hide()
 		self.returnToMenuButton.hide()
@@ -209,15 +199,6 @@ class game():
 			self.clockwiseImage.undraw()
 			self.counterClockwiseButton.hide()
 			self.counterClockwiseImage.undraw()
-			
-	def setBoardView(self):
-		pass
-
-	def getBoardView(self):
-		pass
-
-	def getPlayerTurn(self):
-		pass
 
 	def isRotate(self, point):
 		# if rotate cw
@@ -233,27 +214,16 @@ class game():
 	def setPlayerTurn(self, playerTurn):
 		self.playerTurn = playerTurn
 
-	def getGameStatus(self):
-		pass
-
-	def setGameStatus(self):
-		pass
-
-	def getGameResult(self):
-		pass
-
 	def openTutorial(self):
-
 		sizeX=self.W/2
 		sizeY=self.H/2
-		
 		# draw and display a tutorial
 		tutorialWindow = button(False, "#cfcdcd", "",1*sizeX/3,1*sizeY/3,5*sizeX/3,5*sizeY/3, self.win)
 		tutorialWindow.display()
 		#create a close tutorial button and display it
 		myImage = Image(Point(sizeX,sizeY), 'tutorial.png')
 		myImage.draw(self.win)
-		closeButton = button(False, "#b4b1b1", "Close", 	1*sizeX/3+5,1*sizeY/3+5,1*sizeX/3+80,1*sizeY/3+40, self.win)
+		closeButton = button(False, "#b4b1b1", "Close", 	self.W-sizeX/3-80,1*sizeY/3+5,self.W-sizeX/3-5,1*sizeY/3+40, self.win)
 		closeButton.display()
 
 		# wait for the close tutorial button to close
@@ -268,24 +238,17 @@ class game():
 				break
 		# return to rest of main menu after exiting tutorial
 
-	def cancelPopUp(self):
-		pass
-
 	def confirmExit(self):
-
 		sizeX=self.W/2
 		sizeY=self.H/2
-		
 		# draw and display confirm exit to main menu button
 		confirmExitWindow = button(False, "#bfbfbf", "Do you really want to \nreturn to the main menu?",1*sizeX/3,1*sizeY/3,5*sizeX/3,5*sizeY/3, self.win)
 		confirmExitWindow.updateTextSize(36)
 		confirmExitWindow.display()
-
 		#create a close tutorial button and display it
 		confirmExitButton = button(False, "#d9d9d9", "Confirm Exit", 	5*sizeX/3-2*sizeX/4,  5*sizeY/3 - sizeY/5 - 20, 5*sizeX/3-sizeX/8 ,  5*sizeY/3 - 20, self.win)
 		confirmExitButton.updateTextSize(24)
 		confirmExitButton.display()
-
 		cancelExitButton = button(False, "#d9d9d9", "Cancel Exit", 	1*sizeX/3+sizeX/8,  5*sizeY/3 - sizeY/5 - 20,  1*sizeX/3+2*sizeX/4,  5*sizeY/3 - 20, self.win)
 		cancelExitButton.updateTextSize(24)
 		cancelExitButton.display()
@@ -316,26 +279,26 @@ class game():
 		sizeY=self.H/2
 		
 		# draw and display confirm Forfeit to main menu button
-		confirmForfeitWindow = button(False, "#bfbfbf", "Do you really want to forfeit?\nYour opponent is guarenteed to win",1*sizeX/3,1*sizeY/3,5*sizeX/3,5*sizeY/3, self.win)
+		confirmForfeitWindow = button(False, "#bfbfbf", "Do you really want to forfeit?\nYour opponent is guaranteed to win",1*sizeX/3,1*sizeY/3,5*sizeX/3,5*sizeY/3, self.win)
 		confirmForfeitWindow.updateTextSize(36)
 		confirmForfeitWindow.display()
 
-		#create a close tutorial button and display it
-		confirmForfeitButton = button(False, "#d9d9d9", "Confirm forfeit", 	5*sizeX/3-2*sizeX/4,  5*sizeY/3 - sizeY/5 - 20, 5*sizeX/3-sizeX/8 ,  5*sizeY/3 - 20, self.win)
+		#create a close forfeit button and display it
+		confirmForfeitButton = button(False, "#d9d9d9", "Confirm Forfeit", 	5*sizeX/3-2*sizeX/4,  5*sizeY/3 - sizeY/5 - 20, 5*sizeX/3-sizeX/8 ,  5*sizeY/3 - 20, self.win)
 		confirmForfeitButton.updateTextSize(24)
 		confirmForfeitButton.display()
 
-		cancelForfeitButton = button(False, "#d9d9d9", "Cancel forfeit", 	1*sizeX/3+sizeX/8,  5*sizeY/3 - sizeY/5 - 20,  1*sizeX/3+2*sizeX/4,  5*sizeY/3 - 20, self.win)
+		cancelForfeitButton = button(False, "#d9d9d9", "Cancel Forfeit", 	1*sizeX/3+sizeX/8,  5*sizeY/3 - sizeY/5 - 20,  1*sizeX/3+2*sizeX/4,  5*sizeY/3 - 20, self.win)
 		cancelForfeitButton.updateTextSize(24)
 		cancelForfeitButton.display()
 
-		# wait for the close tutorial button to close
+		# wait for the close forfeit button to close
 		while True:
 			clicker = self.win.getMouse()
 			if clicker is None:  # so we can substitute checkMouse() for getMouse()
 				pass
 			elif confirmForfeitButton.isClicked(clicker):
-				print("confirm forfeit clicked")
+				print("Confirm Forfeit clicked")
 				confirmForfeitButton.hide()
 				confirmForfeitWindow.hide()
 				cancelForfeitButton.hide()
@@ -351,15 +314,12 @@ class game():
 			else:
 				print("else")
 
-	def getBoardPosition(self, Layer, row, col):
-		pass
-
 	def winCondition(self, startPosition):
 		player = self.gameBoard.intBoard[startPosition];
 		layerNumber=0
 		rowNumber=0
 		columnNumber=0
-
+		print (startPosition)
 		# UP and DOWN
 		for layerNumber in range(0, 4):
 			if self.gameBoard.intBoard[startPosition%16+16*layerNumber] != player:
@@ -407,17 +367,17 @@ class game():
 			return True
 				
 		# Top layer Left Column to Bottom Layer Right Column
-		if (startPosition%16 - int(math.floor(startPosition / 16)))%4 == 0:
+		if (((startPosition-startPosition%16)/16)-startPosition%4) ==0:
 			for rowNumber in range(0, 4):
 				if self.gameBoard.intBoard[startPosition%17 + 17*rowNumber] != player:
 					break
 				else:
 					rowNumber=rowNumber+1
 		if rowNumber == 4:
-			returnTrue
+			return True
 			
 		# Top layer Right Column to Bottom Layer Left Column
-		elif (startPosition%16 + int(math.floor(startPosition / 16)))%4 == 3:
+		elif (((startPosition-startPosition%16)/16)+startPosition%4) == 3:
 			for rowNumber in range(0, 4):
 				if self.gameBoard.intBoard[startPosition%15 + 15*rowNumber] != player:
 					break
@@ -427,7 +387,7 @@ class game():
 			return True
 			
 		# Top layer Back Row to Bottom Layer Front Row
-		if (startPosition%16-int(math.floor(startPosition/16)) * 4) < 4:
+		if ((startPosition-startPosition%4)%20) == 0:
 			for rowNumber in range(0,4):
 				if self.gameBoard.intBoard[startPosition%20 + 20*rowNumber] != player:
 					break
@@ -437,7 +397,7 @@ class game():
 			return True
 			
 		# Top layer Front Row to Bottom Layer Back Row
-		elif (startPosition%16 + int(math.floor(startPosition / 16)) * 4)%16 > 11:
+		elif ((startPosition%16+(startPosition-startPosition%16)/4)%16) > 11:
 			for rowNumber in range(0, 4):
 				if self.gameBoard.intBoard[startPosition%12 + 12*rowNumber] != player:
 					break
@@ -447,7 +407,7 @@ class game():
 			return True
 			
 		# 0 to 63
-		if((startPosition%16 - int(math.floor(startPosition / 16)) * 5) ==0):
+		if (startPosition%16-(startPosition-startPosition%16)/16*5)==0:
 			for rowNumber in range(0, 4):
 				if self.gameBoard.intBoard[0 + 21*rowNumber] != player:
 					break
@@ -457,7 +417,7 @@ class game():
 			return True
 
 		#3 to 60
-		elif((startPosition%16 - int(math.floor(startPosition / 16)) * 3) == 3):
+		elif(startPosition%16-(startPosition-startPosition%16)/16*3) == 3:
 			for rowNumber in range(0, 4):
 				if self.gameBoard.intBoard[3 + 19*rowNumber] != player:
 					break
@@ -467,7 +427,7 @@ class game():
 			return True
 						
 		#12 to 51
-		elif (startPosition%16 + int(math.floor(startPosition/ 16 ))*  3) == 12:
+		elif (startPosition%16+(startPosition-startPosition%16)/16*3) == 12:
 			for rowNumber in range(0, 4):
 				if self.gameBoard.intBoard[12 + 13*rowNumber] != player:
 					break
@@ -477,7 +437,7 @@ class game():
 			return True
 						
 		#15 to 48
-		elif((startPosition%16 + int(math.floor(startPosition / 16)) * 5) == 15):
+		elif(startPosition%16+(startPosition-startPosition%16)/16*5) == 15:
 			for rowNumber in range(0, 4):
 				if self.gameBoard.intBoard[15 + 11*rowNumber] != player:
 					break
@@ -487,11 +447,7 @@ class game():
 			return True
 		
 		return False
-
-	# Includes methods to return to main menu without forfeiting
-	def goToMainMenu(self):
-		pass
-		
+	
 	def displayOutcome(self):
 		sizeX=self.W/2
 		sizeY=self.H/2
@@ -557,6 +513,13 @@ class game():
 	def rotateBoard(self):
 		self.gameBoard.rotateBoard(self.angle)
 
+'''#########################################################
+Class name: board
+Class purpose: store the layers of the board for ease in 
+               displaying rotating and adding markers.
+Class dependencies: The Game class uses the board class to 
+               determine win conditions. 
+#########################################################'''
 class board():
 	def __init__(self, W, H, win):
 		self.W=W
@@ -605,6 +568,17 @@ class board():
 	def readMarker(self, layerNumber, row, col):
 		return self.layerPositions[layerNumber].readMarker(row, col)
 
+'''#########################################################
+Class name: layer
+Class purpose: display the layers in both 3D and 2D, 
+               maintain marker button locations even after 
+			   rotation, and keep track of which location 
+			   have been clicked.
+Class dependencies: The layer class relies on the layer class
+               to control the center of each layer. The board
+               class relies on the layer class to pull the 
+			   marker locations.			   
+#########################################################'''
 class layer():
 	def __init__(self, layerColor, layerNumber, W, H, win):
 		self.layerColor=layerColor
@@ -620,7 +594,7 @@ class layer():
 			self.size3D = self.H/3
 		self.centerX = (1.5*self.layerNumber+0.75)*(self.W/6)
 		self.centerX3D=9*self.W/16
-		self.centerY = self.W/4
+		self.centerY = self.W/3
 		self.centerY3D = (self.layerNumber+1.3)*(self.H/6)
 		self.createLayer()
 		self.markerPosition = [[marker(0, Point(0,0), 0, self.win) for x in range(4)] for y in range(4)]
@@ -812,6 +786,11 @@ class layer():
 	def readMarker(self, row, col):
 		return self.layerPositions[layerNumber].readMarker(row, col)
 
+'''#########################################################
+Class name: marker
+Class purpose: store the size, color, and center of a marker.
+Class dependencies: Markers are added to the layer class. 
+#########################################################'''
 class marker( ):
 	def __init__(self, val, center, radius, win):
 		if val==1:
@@ -833,18 +812,14 @@ class marker( ):
 	def hide(self):
 		self.markerCircle.undraw()
 
-class cross(marker):
-	def __init__(self):
-		self.color = 'blue'
-		pass
-	pass
-
-class naught(marker):
-	def __init__(self):
-		self.color = 'red'
-		pass
-	pass
-
+'''#########################################################
+Class name: button
+Class purpose: store the size, color, and corners of 
+               rectangular buttons as well as the text 
+			   displayed on it.
+Class dependencies: The menu, game, and layer class use 
+               buttons frequently. 
+#########################################################'''
 class button():
 	def __init__(self, initState, color, text, x1, y1, x2, y2, win):
 		self.state = initState
@@ -881,6 +856,14 @@ class button():
 		lr = self.box.getP2()  # assume p2 is lower right 
 		return ul.getX() < point.getX() < lr.getX() and ul.getY() < point.getY() < lr.getY()
 
+'''#########################################################
+Class name: polyButton
+Class purpose: store the size, color, and corners of 
+               rectangular buttons as well as the text 
+			   displayed on it.
+Class dependencies: The layer class use polyButtons for 3D 
+               view frequently. 
+#########################################################'''
 class polyButton():
 	def __init__(self, initState, color, p1,p2,p3,p4, win):
 		self.state = initState
@@ -902,10 +885,16 @@ class polyButton():
 	def changeColor(self,color):
 		self.box.setFill(color)
 		self.color=color
+		self.box.setOutline( color)
 	
 	def isClicked(self, point):
 		return self.p1.getY() < point.getY() < self.p4.getY() and (self.p1.getX()-self.p1.getY()) < (point.getX()-point.getY()) < (self.p2.getX()-self.p2.getY())		
 
+'''#########################################################
+Class name: textObject
+Class purpose: store text with size and color.
+Class dependencies: Used by game class for details. 
+#########################################################'''
 class textObject():
 	def __init__(self, color, text, x, y, win):
 		self.color = color
@@ -943,7 +932,12 @@ class textObject():
 
 	def hide(self):
 		self.text.undraw()
-		
+
+'''#########################################################
+Class name: logo
+Class purpose: store the 3D cube with title text.
+Class dependencies: Used by menu class for main menu. 
+#########################################################'''		
 class logo():
 	def __init__(self, color, text, x, y, size, win):
 		self.centerX = x-size/8
@@ -988,7 +982,6 @@ class logo():
 		self.title.setFill("#b3cccc")
 		self.title.setStyle("bold")
 		
-
 	def display(self):
 		self.v1Line.draw(self.win)
 		self.v2Line.draw(self.win)
